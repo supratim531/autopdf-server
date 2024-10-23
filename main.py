@@ -14,7 +14,7 @@ app.add_middleware(
   allow_headers=["*"],
 )
 
-@app.get("/health")
+@app.get("/")
 async def read_root():
 	return {"message": "Welcome to FastAPI server"}
 
