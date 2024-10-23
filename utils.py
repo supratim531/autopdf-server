@@ -1,8 +1,7 @@
 import os
-import time
 import smtplib
-import pyautogui
-import subprocess
+
+from bs4 import BeautifulSoup
 
 from email import encoders
 from email.mime.base import MIMEBase
@@ -52,20 +51,26 @@ def send_email(receiver_email):
   except Exception as e:
     print(f"Failed to send email: {e}")
 
-# def html_to_pdf():
-# pdf_name= input("Enter your own pdf file name (without extension): ")
-# chrome_path = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
-# html_file_path = r"file:///D:/startup/automation_pdf/test.html"
-# subprocess.Popen([chrome_path, html_file_path])
-# time.sleep(5)
-# pyautogui.hotkey('ctrl', 'p')
-# time.sleep(2)
-# pyautogui.press('enter')
-# time.sleep(3)
-# pyautogui.press('enter')
-# time.sleep(3)
-# save_location = f"D:\\startup\\automation_pdf\\pdf_storage\\{pdf_name}.pdf"
-# pyautogui.write(save_location)
-# pyautogui.press('enter')
-# time.sleep(2)
-# print(f"PDF saved successfully as {save_location}!")
+def fill_html_as_pdf(name, email):
+	# Load the HTML file
+	with open('pdf.html', 'r') as file:
+		html_content = file.read()
+
+	# Parse the HTML using BeautifulSoup
+	soup = BeautifulSoup(html_content, 'html.parser')
+
+	# Find the input field by its id and set the value for "Name"
+	name_input = soup.find('input', {'id': 'name'})
+	if name_input:
+		name_input['value'] = name
+
+	# Find the input field by its id and set the value for "Email"
+	email_input = soup.find('input', {'id': 'email'})
+	if email_input:
+		email_input['value'] = email
+
+	# Save the modified HTML to a new file (or overwrite the original)
+	with open('filled_pdf.html', 'w') as file:
+		file.write(str(soup))
+
+	print("HTML file updated successfully!")

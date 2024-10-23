@@ -1,11 +1,9 @@
 import subprocess
 
-from fill_html import fill_html_as_pdf
-
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
-from utils import send_email
+from utils import send_email, fill_html_as_pdf
 
 app = FastAPI()
 origins = ['*']
