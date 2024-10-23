@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Clone</title>
+    <style>
+        /* Ensure that the PDF-like style is applied */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        .page {
+            width: 210mm; /* A4 width */
+            /* height: 180mm; */
+            margin: 20mm auto;
+            padding: 20mm;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            page-break-after: always;
+        }
+
+        /* Optional: Apply some styling to the paragraphs */
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+            text-align: justify;
+        }
+
+        /* Ensure last page doesn't add unnecessary page-break */
+        .page:last-child {
+            page-break-after: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Page 1 -->
+    <div class="page">
+        <p>
+            This is a paragraph on the first page of the PDF. It contains some text that simulates the paragraph structure of your actual PDF. You can adjust this content based on your specific needs. The page layout ensures it resembles the original PDF's first page.
+        </p>
+    </div>
+
+    <!-- Page 2 -->
+    <div class="page">
+        <form>
+			<label for="name">Name:</label>
+			<input type="text" id="name" name="name" value=""><br><br>
+        
+			<label for="email">Email:</label>
+			<input type="email" id="email" name="email" value=""><br><br>
+        
+			<input type="submit" value="Submit">
+		</form>
+    </div>
+
+    <!-- Page 3 -->
+    <div class="page">
+        <p>
+            Finally, this is the third page. Like the previous pages, this section mirrors the structure and content of the third page from your original PDF. You can add as much text as you need to match the appearance of your source document.
+        </p>
+    </div>
+
+</body>
+</html>
