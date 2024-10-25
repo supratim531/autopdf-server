@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF Clone</title>
+  <style>
+    /* Base setup for A4 page layout */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Page size for A4 (210mm x 297mm) */
+    .page {
+      width: 210mm;
+      /* height: 297mm; */
+      /* padding: 20mm; */
+      /* margin: 10px auto; */
+      margin: 0px auto;
+      padding-bottom: 10px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      page-break-after: always;
+    }
+
+    /* Print styles to retain the A4 page size when printing */
+    @media print {
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      .page {
+        /* Remove border for a cleaner PDF output */
+        border: none;
+        page-break-after: always;
+      }
+    }
+
+    /* Optional: Apply some styling to the paragraphs */
+    p {
+      font-size: 16px;
+      line-height: 1.6;
+      text-align: justify;
+    }
+
+    /* Ensure last page doesn't add unnecessary page-break */
+    .page:last-child {
+      page-break-after: auto;
+    }
+
+    .page nav {
+      color: #fff;
+      padding: 10px;
+      background-color: #0cae4c;
+    }
+
+    .page nav .heading {
+      /* padding-top: 60px; */
+      padding-top: 10px;
+      margin-bottom: -52px;
+      font-size: 26px;
+      letter-spacing: 2px;
+    }
+
+    .page2Content-1 {
+      font-size: 10px;
+      /* align-items: end; */
+      display: flex;
+    }
+
+    .page2Content-2 .content2 {
+      font-size: 10px;
+      margin-left: 10px;
+      margin-top: 2px;
+      /* align-items: start; */
+      /* justify-content: right; */
+    }
+
+    .hero-section {
+      background-image: url('/static/hero.jpg');
+    }
+
+    .herobar {
+      background: linear-gradient(120deg, #0cae4c 60%, #006400 40%);
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 5px 21px;
+      text-align: left;
+      margin-top: -10px;
+      /* border-radius: 6px; */
+      /* border: 2px solid black; */
+    }
+
+    .page2Content-3 {
+      padding: 18px;
+      gap: 6px;
+      display: flex;
+      flex-direction: column;
+      /* border: 2px solid red; */
+      margin-top: -12px;
+
+      &>div {
+        gap: 6px;
+        display: inline-flex;
+
+        & input {
+          align-self: flex-start;
+        }
+
+        & label {
+          font-size: 10px;
+          /* border: 2px solid red; */
+        }
+      }
+    }
+
+    .table thead tr {
+      /* background:#101110; */
+      color: #fff;
+      text-align: left;
+    }
+
+    table,
+    th,
+    td {
+      padding: 6px 9px;
+      border: 1px solid black;
+      border-left: none;
+      border-right: none;
+      border-collapse: collapse;
+    }
+
+    th {
+      background: #212020;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Page 1 -->
+  <div class="page">
+    <div class="hero-section" style="height: 290mm; background-size: cover;">
+    </div>
+  </div>
+
+  <!-- Page 2 -->
+  <div class="page">
+    <nav>
+      <div class="heading">
+        <h1>SYARAT DAN PERATURAN</h1>
+      </div>
+    </nav>
+    <div class="page2Content-1">
+      <ol style="font-size: 10px; line-height: 11px; color: #333;">
+        <li>Program ini dikenali sebagai MILO6 Champions Clinic (Klinik). Program ini terbuka kepada semua
+          rakyat Malaysia berumur 7 tahun hingga 12 tahun (lahir pada tahun 2012 hingga 2017) sahaja.</li><br>
+
+        <li>Program MILO6 Champions Clinic yang diadakan ini adalah khusus untuk pengenalan sukan bagi sukan
+          utama di Malaysia.</li><br>
+
+        <li>Klinik sukan ini akan diadakan di gelanggang yang ditetapkan oleh penganjur iaitu MILO6. Gelanggang
+          adalah berbeza mengikut sukan yang dipilih. la akan bermula dari 31 Ogos 2024 hingga November 2024
+          pada setiap hujung minggu. Klinik ini akan berlansung dalam 1 sesi. Tarikh setiap sesi mungkin
+          berbeza mengikut jenis sukan dan lokasi.</li><br>
+
+        <li>Peserta berdaftar akan mengikuti 1 sesi Klinik sahaja. Tempoh setiap sesi adalah 2-3 jam. Semua
+          peserta diwajibkan menyempurnakan kesemua sesi latihan yang ditetapkan untuk mendapatkan sijil
+          penyertaan program.</li><br>
+
+        <li>Yuran penyertaaan adalah sebanyak RM10 (Ringgit Malaysia Sepuluh Sahaja) dan perlu dibayar kepada
+          akaun NR Sports & Events (26410600007077) RHB Bank Berhad. Sila kemukan slip pembayaran kepada
+          urusetia semasa pendaftaran.</li><br>
+
+        <li>Pendaftaran akan dibuka atas pemberitahuan pihak penganjur dan akan ditutup 2 hari (pada pukul 5
+          petang) sebelum tarikh klinik yang dipilih atau apabila kuota setiap kumpulan penuh.</li><br>
+
+        <li>Penyertaan adalah terhad dan hanya boleh menerima kuantiti penyertaan tertentu yang ditetapkan
+          mengikut lokasi dan jenis sukan. la mengikut konsep “siapa cepat, dia dapat”.</li><br>
+
+        <li>Semua peserta akan menerima 1 helai baju-T MILO6 dan akan diagihkan pada sesi Klinik.</li><br>
+
+        <li> Setiap peserta diwajibkan untuk memakai baju-T MILO6 sepanjang masa sesi Klinik berlangsung.</li>
+        <br>
+
+        <li>Semua peserta mesti mengikut arahan jurulatih yang berkaitan dengan latihan sepanjang masa Klinik
+          dijalankan.</li><br>
+        <li>Jadual latihan boleh dimuat turun ketika pendaftaran. Peserta diwajibkan untuk hadir ke lokasi
+          Klinik 15 minit sebelum latihan bermula.</li><br>
+      </ol>
+    </div>
+
+    <div class="page2Content-2" style="margin-top: -15px;">
+      <h5 style="color: #0cae4c; margin-left: 40px; margin-top: 2px;">Jurulatih/Penjaga/Ibu Bapa</h5>
+      <div class="para" style="margin-top: -15px;">
+        <span style="margin-left: 40px; font-size: 10px;">Apabila menandatangani borang pendaftaran,
+          Jurulatih/Penjaga/Ibu Bapa peserta secara sendiri dan bagipihak peserta:</span>
+      </div>
+      <ul class="content2" style="font-size: 10px; line-height: 11px; color: #333;">
+        <li>sedia maklum akan risiko-risiko berkaitan dengan program Klink ini dan bersetuju untuk TIDAK
+          mendakwa/menyalahkan penganjur bersama program, penaja utama, penaja bersama, pemilik lokasi
+          program, kakitangan lokasi program, jurulatih program untuk tidak mengambil sebarang tindakan,
+          dakwaan atas sebarang kerugian, kerosakan, kecederaan, kehilangan nyawa atas sebarang kejadian yang
+          berkenaan dengan peserta saya yang menyertai program ini termasuk ketika dalam perjalanan pergi dan
+          balik yang membabitkan kecederaan atau kematian yang dialami sebelum, semasa dan selepas program
+          ini;</li><br>
+
+        <li>mengaku mendaftar peserta berumur 7 hingga 12 tahun diberi pelepasan keluarga/penjaga untuk
+          menyertai program dan bertanggungjawab sepenuhnya terhadap mereka ke atas apa-apa kejadian/perkara;
+        </li><br>
+
+        <li>membenarkan pihak penganjur, penaja utama dan penaja bersama melakukan rakaman gambar, audio dan
+          visual-visual pemain, ibubapa/penjaga untuk tujuan promosi acara ini di semua media termasuk media
+          elektronik dan laman sesawang;</li><br>
+
+        <li>mesti mematuhi dan mentaati segala peraturan dan undang-undang, dan juga bersetuju untuk mengikuti
+          apa-apa arahan lisan atau arahan yang diberikan oleh pihak penganjur, kakitangan, wakil atau ejen-
+          ejennya;</li><br>
+
+        <li>mengesahkan bahawa peserta sihat secara fizikal, bersedia atau dilatih untuk mengambil bahagian
+          dalam acara ini dan tidak disyorkan untuk tidak mengambil bahagian oleh seorang profesional
+          perubatan yang berkelayakan. Peserta tidak mempunyai sebab-sebab atau masalah yang berkaitan dengan
+          kesihatan yang menghalang penyertaan peserta dalam acara ini; dan</li><br>
+
+        <li>memahami bahawa acara ini melibatkan risiko kecederaan diri, dan bersetuju untuk bertanggungjawab
+          atas kesihatan dan kesejahteraan sendiri semasa berkaitan acara ini. Pengurus pasukan/jurulatih
+          bertanggungjawab sepenuhnya terhadap peserta-peserta tersebut.</li><br>
+      </ul>
+    </div>
+
+    <div class="herobar">
+      PERSETUJUAN JURULATIH / PENJAGA / IBU BAPA
+    </div>
+    <div class="page2Content-3" style="font-size: 10px; line-height: 11px; color: #333;">
+      <div>
+        <input type="checkbox" name="check" id="checkbox1" value="">
+        <label for="checkbox1">
+          Sebagai jurulatih / penjaga / ibubapa, saya dengan ini mengesahkan bahawa saya
+          memahami dan bersetuju dengan semua Terma & Syarat yang dinyatakan dalam Syarat & Peraturan.
+        </label>
+      </div>
+
+      <div>
+        <input type="checkbox" name="check" id="checkbox2" value="">
+        <label for="checkbox2">
+          <span>
+            Saya ingin menerima maklumat pemasaran dan promosi mengenai produk, perkhidmatan dan acara Penganjur pada
+            masa hadapan.
+          </span>
+        </label>
+      </div>
+
+      <div>
+        <input type="checkbox" name="check" id="checkbox3" value="">
+        <label for="checkbox3" style="justify-content:start;">Saya bersetuju dengan notis privasi, terma dan
+          syarat
+          penyertaan yang dinyatakan di halaman Notis Privasi.</label>
+      </div>
+    </div>
+    <div class="foot"
+      style="border: 3px solid #0c6638;padding-left: 8px; margin-top: -15px; width: 700px; margin-left: 40px;">
+      <h6 style="color: #0c6638;">JURULATIH/PENJAGA/IBUBAPA [Sila pilih yang berkaitan]</h6>
+      <h6 style="color: #0c6638;">Nama:</h6>
+      <span style="color: #0c6638; font-size: 12px;">No Kad Pengenalan:</span>
+      <span style="color: #0c6638; font-size: 12px; font-weight: 500; margin-left: 400px;">Tandatangan:</span>
+    </div>
+  </div>
+
+  <!-- Page 3 -->
+  <div class="page">
+    <nav>
+      <div class="heading">
+        <h1>BORANG PENYERTAAN</h1>
+      </div>
+    </nav>
+    <div class="form1">
+      <form style="margin-top: 15px; display: flex; flex-direction: column; margin-left: 20px;">
+        <label for="name" style="font-size: 12px; margin-bottom: 6px;">Nama penuh seperti dalam Kad Pengenalan
+          (Encik/Cik):</label>
+        <input type="text" id="name" name="name" value="" style="width: 740px;"><br><br>
+      </form>
+    </div>
+
+    <div class="form2" style="margin-top: -15px; display: flex;">
+      <form style="margin-left: 20px;">
+        <label for="num" style="font-size: 12px;margin-bottom: 6px; display: flex">No. Kad Pengenalan :</label>
+        <div class="ic" style="display: flex;">
+          <div class="input1">
+            <input type="name" id="num" value="" style="width: 15px;">
+          </div>
+          <div class="input2">
+            <input type="name" id="num" value="" style="width: 15px;">
+          </div>
+          <div class="input3">
+            <input type="name" id="num" value="" style="width: 15px;">
+          </div>
+          <div class="input4">
+            <input type="name" id="num" value="" style="width: 15px;">
+          </div>
+          <div class="input5">
+            <input type="name" id="num" value="" style="width: 15px;">
+          </div>
+          <div class="input6">
+            <input type="name" id="num" value="" style="width: 15px;">
+          </div>
+
+          <span style="margin-left: 4px;">-</span>
+
+          <div class="input7" style="margin-left: 4px;">
+            <input type="name" id="num" value="" style="width: 15px;">
+          </div>
+          <div class="input8">
+            <input type="name" id="num" value="" style="width: 15px;">
+          </div>
+
+          <span style="margin-left: 4px;">-</span>
+
+          <div class="input9" style="margin-left: 4px;">
+            <input type="name" id="num" value="" style="width: 15px;">
+          </div>
+          <div class="input10">
+            <input type="name" id="num" value="" style="width: 15px;">
+          </div>
+        </div>
+      </form>
+
+
+      <div class="form3" style="margin-left: 60px;">
+        <form>
+          <label for="name" style="font-size: 12px; display: flex; margin-bottom: 6px">Jantina:</label>
+          <div class="gender" style="display: flex;">
+            <div class="input11">
+              <input type="name" id="name" value="" style="width: 15px;">
+            </div>
+            <span style="margin-left: 4px; font-size: 22px;">/</span>
+            <div class="input12" style="margin-left: 4px;">
+              <input type="name" id="name" value="" style="width: 15px;">
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="form4" style="margin-left: 60px;">
+        <form>
+          <label for="name" style="font-size: 12px; display: flex; margin-bottom: 6px">Tarikh Lahir:</label>
+          <div class="dob" style="display: flex;">
+            <div class="input13">
+              <input type="name" id="name" value="" style="width: 15px;">
+            </div>
+            <div class="input14">
+              <input type="name" id="name" value="" style="width: 15px;">
+            </div>
+            <span style="margin-left: 4px;">-</span>
+            <div class="input15" style="margin-left: 4px;">
+              <input type="name" id="name" value="" style="width: 15px;">
+            </div>
+            <div class="input16">
+              <input type="name" id="name" value="" style="width: 15px;">
+            </div>
+            <span style="margin-left: 4px;">-</span>
+            <div class="input17" style="margin-left: 4px;">
+              <input type="name" id="name" value="" style="width: 15px;">
+            </div>
+            <div class="input18">
+              <input type="name" id="name" value="" style="width: 15px;">
+            </div>
+            <div class="input19">
+              <input type="name" id="name" value="" style="width: 15px;">
+            </div>
+            <div class="input20">
+              <input type="name" id="name" value="" style="width: 15px;">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="form5" style="display: flex;">
+      <form style="margin-top: 15px; display: flex; flex-direction: column; margin-left: 20px;">
+        <label for="name" style="font-size: 12px; margin-bottom: 6px">Telefon (bimbit):</label>
+        <div class="phNo" style="display: flex;">
+          <div class="input1">
+            <input type="name" id="name" value="" style="width: 15px;">
+          </div>
+          <div class="input2">
+            <input type="name" id="name" value="" style="width: 15px;">
+          </div>
+          <div class="input3">
+            <input type="name" id="name" value="" style="width: 15px;">
+          </div>
+          <span style="margin-left: 4px;">-</span>
+          <div class="input4" style="margin-left: 4px;">
+            <input type="name" id="name" value="" style="width: 15px;">
+          </div>
+          <div class="input5">
+            <input type="name" id="name" value="" style="width: 15px;">
+          </div>
+          <div class="input6">
+            <input type="name" id="name" value="" style="width: 15px;">
+          </div>
+          <div class="input7">
+            <input type="name" id="name" value="" style="width: 15px;">
+          </div>
+          <div class="input8">
+            <input type="name" id="name" value="" style="width: 15px;">
+          </div>
+          <div class="input9">
+            <input type="name" id="name" value="" style="width: 15px;">
+          </div>
+          <div class="input10">
+            <input type="name" id="name" value="" style="width: 15px;">
+          </div>
+        </div>
+      </form>
+      <div class="form6" style="margin-left: 40px; padding: 17px;">
+        <form>
+          <label for="name" style="font-size: 12px;">E-mel:</label>
+          <div class="input10">
+            <input type="name" id="name" value="" style="width: 440px;">
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="form7" style="margin-top: -16px;">
+      <form style="margin-top: 15px; display: flex; flex-direction: column; margin-left: 20px;">
+        <label for="name" style="font-size: 12px; margin-bottom: 4px;">Alamat:</label>
+        <input type="text" id="name" name="name" value="" style="width: 740px;">
+        <input type="text" id="name" name="name" value="" style="width: 740px;">
+        <input type="text" id="name" name="name" value="" style="width: 740px;">
+      </form>
+    </div>
+
+    <div class="form8" style="margin-top: 15px; margin-left: 20px; display: flex; margin-bottom: 35px;">
+      <form>
+        <label for="name" style="font-size: 12px;">Poskod:</label>
+        <div class="postCode" style="display: flex;">
+          <div class="input1">
+            <input type="name" id="name" value="" style="width: 15px;">
+          </div>
+          <div class="input2">
+            <input type="name" id="name" value="" style="width: 15px;">
+          </div>
+          <div class="input3">
+            <input type="name" id="name" value="" style="width: 15px;">
+          </div>
+          <div class="input4">
+            <input type="name" id="name" value="" style="width: 15px;">
+          </div>
+        </div>
+      </form>
+
+      <div class="form9" style="margin-left: 50px; margin-top: 4px;">
+        <form>
+          <label for="name" style="font-size: 12px; display: flex;">Bandar:</label>
+          <div class="city" style="display: flex;">
+            <div class="input5">
+              <input type="name" id="name" value="" style="width: 280px;">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="form10" style="margin-left: 50px; margin-top: 4px;">
+        <form>
+          <label for="name" style="font-size: 12px; display: flex;">Negeri:</label>
+          <div class="state" style="display: flex;">
+            <div class="input6">
+              <input type="name" id="name" value="" style="width: 260px;">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="herobar">
+      NOMBOR KECEMASAN
+    </div>
+    <div class="form11">
+      <form style="margin-top: 15px; display: flex; flex-direction: column; margin-left: 20px;">
+        <label for="name" style="font-size: 12px; margin-bottom: 6px;">Nama:</label>
+        <input type="text" id="name" name="name" value="" style="width: 740px;">
+      </form>
+    </div>
+    <div class="form12" style="display: flex;">
+      <form style="margin-top: 15px; display: flex; flex-direction: column; margin-left: 20px;">
+        <label for="name" style="font-size: 12px; margin-bottom: 6px;">Hubungan:</label>
+        <input type="text" id="name" name="name" value="" style="width: 340px;">
+      </form>
+      <div class="form13" style="display: flex; margin-left: 40px;">
+        <form style="margin-top: 15px; display: flex; flex-direction: column; margin-left: 20px;">
+          <label for="name" style="font-size: 12px; margin-bottom: 6px">Telefon (bimbit):</label>
+          <div class="phNo" style="display: flex;">
+            <div class="input1">
+              <input type="name" id="name" value="" style="width: 15px;">
+            </div>
+            <div class="input2">
+              <input type="name" id="name" value="" style="width: 15px;">
+            </div>
+            <div class="input3">
+              <input type="name" id="name" value="" style="width: 15px;">
+            </div>
+            <span style="margin-left: 4px;">-</span>
+            <div class="input4" style="margin-left: 4px;">
+              <input type="name" id="name" value="" style="width: 15px;">
+            </div>
+            <div class="input5">
+              <input type="name" id="name" value="" style="width: 15px;">
+            </div>
+            <div class="input6">
+              <input type="name" id="name" value="" style="width: 15px;">
+            </div>
+            <div class="input7">
+              <input type="name" id="name" value="" style="width: 15px;">
+            </div>
+            <div class="input8">
+              <input type="name" id="name" value="" style="width: 15px;">
+            </div>
+            <div class="input9">
+              <input type="name" id="name" value="" style="width: 15px;">
+            </div>
+            <div class="input10" style="margin-bottom: 35px;">
+              <input type="name" id="name" value="" style="width: 15px;">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="herobar">
+      PERISYTIHARAN PERUBATAN
+    </div>
+    <div class="page3Content-3" style="margin-top: 18px;">
+      <span style="font-size: 12PX; margin-left: 24px;">Adakah anak anda mempunyai sebarang masalah
+        kesihatan/alahan? :</span>
+    </div>
+    <div class="checkbox4" style="margin-left: 18px; font-size: 12px;">
+      <input type="checkbox" name="check" id="checkbox4" value="">
+      <label for="checkbox4">Ya. Sila Jelaskan Tidak</label>
+    </div>
+    <div class="input20" style="display: flex; margin-bottom: 35px;">
+      <form style="margin-top: 15px; display: flex; flex-direction: column; margin-left: 20px;">
+        <input type="text" id="name" name="name" value=""
+          style="width: 390px; height: 70px; margin-left: 190px; margin-top: -30px;">
+      </form>
+      <div class="checkbox5" style="margin-left: 20px; font-size: 12px;padding: 25px; margin-top: -42px;">
+        <input type="checkbox" name="check" id="checkbox5" value="">
+        <label for="checkbox5">Tidak</label>
+      </div>
+    </div>
+    <div class="herobar">
+      PAKAIAN ACARA
+    </div>
+
+    <div class="page3Content-4" style="display: flex;">
+      <div class="checkboxContent" style="display: flex; flex-wrap: wrap;margin: 24px; padding: 24px; width: 200px;">
+        <span style="font-size: 12px;">saiz</span>
+        <div class="checkbox6" style="display: flex; flex-direction: row-reverse; margin-left: 12px;">
+          <input type="checkbox" name="check" id="checkbox6" value="">
+          <label for="checkbox6" style="font-size: 12PX;">XS:</label>
+        </div>
+        <div class="checkbox7" style="display: flex; flex-direction: row-reverse; margin-left: 12px;">
+          <input type="checkbox" name="check" id="checkbox7" value=""> <label for="checkbox7"
+            style="font-size: 12PX;">M:</label>
+        </div>
+        <div class="checkbox8" style="display: flex; flex-direction: row-reverse; margin-left: 12px;">
+          <input type="checkbox" name="check" id="checkbox8" value="">
+          <label for="checkbox8" style="font-size: 12PX;">XL:</label>
+        </div>
+        <div class="checkbox9" style="display: flex; flex-direction: row-reverse; margin-left: 41px; margin-top: 12px;">
+          <input type="checkbox" name="check" id="checkbox9" value="">
+          <label for="checkbox9" style="font-size: 12PX;">S:</label>
+        </div>
+        <div class="checkbox10"
+          style="display: flex; flex-direction: row-reverse; margin-left: 16px; margin-top: 12px;">
+          <input type="checkbox" name="check" id="checkbox10" value="">
+          <label for="checkbox10" style="font-size: 12PX;">L:</label>
+        </div>
+      </div>
+
+    </div>
+    <div class="table"
+      style="display: flex; font-size: 12PX;padding: 24px; width: 252px; margin-left: 430px; margin-top: -120px;">
+      <table class="table1" style="border: 1px solid black;">
+        <tr style="color: antiquewhite;">
+          <th></th>
+          <th>XS</th>
+          <th>S</th>
+          <th>M</th>
+          <th>L</th>
+          <th>XL</th>
+        </tr>
+        <tr>
+          <td>DADA</td>
+          <td>30''</td>
+          <td>32''</td>
+          <td>34''</td>
+          <td>36</td>
+          <td>38''</td>
+        </tr>
+        <tr>
+          <td>PANJANAG</td>
+          <td>20''</td>
+          <td>21''</td>
+          <td>22''</td>
+          <td>23''</td>
+          <td>24''</td>
+        </tr>
+        <tr>
+          <td>BAHU</td>
+          <td>13''</td>
+          <td>14''</td>
+          <td>15''</td>
+          <td>16''</td>
+          <td>17''</td>
+        </tr>
+        <tr>
+          <td>LENGAN</td>
+          <td>6''</td>
+          <td>6.5''</td>
+          <td>7''</td>
+          <td>7.5''</td>
+          <td>8''</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Page 4 -->
+  <div class="page">
+    <nav>
+      <div class="heading">
+        <h1>NOTIS PRIVASI</h1>
+      </div>
+    </nav>
+
+    <div class="page4Content1" style="margin-left: 38px; width: 90%; gap: 10px; display: flex; flex-direction: column;">
+      <P style="font-size: 10px; line-height: 11px; color: #333; margin-bottom: -12px;">
+        Dengan menyertai acara MILO Champions Clinic (Klinik) (“Acara tersebut”),
+        anda telah bersetuju untuk Nestlé Products Sdn. Bhd. dan mana-mana syarikat pegangan, subsidiari atau
+        berkaitannya sebagaimana yang ditakrifkan dalam Akta Syarikat 2016 (“Kumpulan Nestlé Malaysia”) dan
+        pembekal-pembekal perkhidmatan, ejen-ejen dan kontraktor-kontraktor yang memberikan sokongan pentadbiran
+        dan perniagaan kepada kami dan bertindak bagi pihak kami (“Pihak-Pihak Ketiga Lantikan”) (secara
+        kolektif “Penganjur” atau “kami”) memproses maklumat peribadi peserta yang dikemukakan dalam borang
+        penyertaan atas talian bagi tujuan Acara tersebut . Ini termasuk mendedahkan nama peserta kepada
+        masyarakat umum apabila peserta menyertai acara kami dengan menerbitkan nama, gambar-gambar dan
+        lain-lain maklumat peribadi peserta tanpa pampasan untuk tujuan pengiklanan dan publisiti.</P>
+
+      <P style="font-size: 10px; line-height: 11px; color: #333; margin-bottom: -12px;">
+        Penganjur juga
+        boleh menggunakan maklumat peribadi peserta bagi tujuan
+        menghubungi dan menghantar maklumat atau bahan-bahan pemasaran dan promosi mengenai produk kami,
+        perkhidmatan, apa-apa promosi, acara atau pertandingan yang dianjurkan oleh Penganjur. Sila nyatakan
+        pilihan anda pada borang sekiranya anda bersetuju kepada penggunaan maklumat peribadi peserta bagi
+        tujuan ini.</P>
+
+      <P style="font-size: 10px; line-height: 11px; color: #333; margin-bottom: -12px;">
+        Sekiranya anda bersetuju untuk berkongsi dan mendedahkan maklumat peribadi
+        peserta untuk merujuk kepada Penganjur, anda menpakui bahawa anda telah mendapatkan persetujuan daripada
+        peserta tersebut untuk berkongsi dan mendedahkan maklumat peribadinya kepada kami dan untuk dihubungi
+        oleh kami.</p>
+
+      <P style="font-size: 10px; line-height: 11px; color: #333; margin-bottom: -12px;">
+        Berkenaan denpan golongan bawah umur atau individu-individu yang tidak layak di
+        bawah undang-undang untuk memberi kebenaran, anda menpesahkan bahawa mereka telah melantik anda untuk
+        bertindak bagi pihak mereka dan untuk bersetuju bagi pihak mereka kepada pemprosesan maklumat peribadi
+        mereka selaras dengan Notis Privasi ini.</P>
+
+      <P style="font-size: 10px; line-height: 11px; color: #333; margin-bottom: -12px;">Pada masa tertentu Penganjur
+        mungkin melantik Pihak-Pihak
+        Ketiga Lantikan untuk
+        memproses maklumat peribadi peserta. Semua Pihak-Pihak Ketiga Lantikan adalah terikat secara kontrak
+        untuk mengambil langkah-langkah yang sewajarnya untuk menyimpan maklumat dengan selamat dan tidak
+        menggunakan maklumat peribadi peserta dalam apa jua cara selain daripada yang dinyatakan di sini dan
+        dalam Polisi Privasi kami di <span style="color: #0cae4c;">http://www.nestle.com.my/info/privacy
+          policy.</span></P>
+
+      <P style="font-size: 10px; line-height: 11px; color: #333; margin-bottom: -12px;">
+        Pihak penganjur adalah sebuah syarikat global dan maklumat peribadi peserta
+        mungkin akan dipindahkan merentasi sempadan melalui laman sesawang. Justeru, penganjur akan memastikan
+        bahawa data peserta hanya akan dipindahkan ke negara yang mempunyai tahap undang-undang perlindungan
+        data yang sama atau setara, seperti yang dinyatakan dalam Polisi Privasi kami di<span style="color: #0cae4c;">
+          http://www.nestle.com.my/info/privacy policy.</span></p>
+
+      <P style="font-size: 10px; line-height: 11px; color: #333; margin-bottom: -12px;">
+        Setakat mana undanp-undang terpakai membenarkan, anda mempunyai hak untuk
+        meminta akses kepada, meminta salinan, meminta untuk mengemaskini atau membetulkan, data peribadi
+        peserta yanp disimpan oleh kami.</p>
+
+      <P style="font-size: 10px; line-height: 11px; color: #333; margin-bottom: -12px;">
+        Semua permintaan atau pertanyaan bertulis anda hendaklah dialamatkan
+        kepada:<br>Alamat: <span style="color: #0cae4c;">Nestlé Products Sdn. Bhd., Tingkat 22, 1 Powerhouse, 1
+          Persiaran Utama, Bandar Utama, 47800 Petaling Jaya, Selangor.</span> Atau Borang Web : <span
+          style="color: #0cae4c;">https://www.nestle.com.my/contactus</span> Atau Hubungi kami : <span
+          style="color: #0cae4c;">1-800-88-3433</span></p>
+
+      <P style="font-size: 10px; line-height: 11px; color: #333; margin-bottom: -12px;">
+        Sila ambil perhatian bahawa Penganjur memerlukan maklumat peribadi peserta untuk
+        memproses penyertaan peserta dalam Acara tersebut dan tanpa maklumat yang diperlukan, kami tidak akan
+        dapat memproses permohonan anda.</P>
+
+      <P style="font-size: 10px; line-height: 11px; color: #333; margin-bottom: -12px;">Untuk penerangan terperinci
+        mengenai amalan privasi kami, sila rujuk kepada
+        <span style="color: #0cae4c;">Polisi Pıivasi</span>
+        kami di <span style="color: #0cae4c">http://www.nestle.con.my/info/prıvacy policy</span>.
+        Kami berhak untuk mengemaskini dan meminda Notis Privasi ini atau Polisi Privasi kami dari semasa ke semasa.
+      </P>
+
+      <P style="font-size: 10px; line-height: 11px; color: #333; margin-bottom: -12px;">
+        Kami mungkin memerlukan anda mengemukakan Maklumat Peribadi Sensitif peserta
+        (seperti data yang berkaitan dengan kesihatan fizikal atau mental peserta, termasuk keadaan kesihatan)
+        sekiranya peserta memohon untuk menyertai Acara tersebut.
+      </P>
+
+      <P style="font-size: 10px; line-height: 11px; color: #333; margin-bottom: -12px;">
+        Kami hanya akan menggunakan Maklumat Peribadi Sensitif peserta bagi tujuan Acara
+        tersebut yang tertentu dan untuk menasihati peserta mengenai produk yang sesuai untuk memenuhi tahap
+        kesihatan semasa dan gaya hidup anda.
+      </P>
+
+      <P style="font-size: 10px; line-height: 11px; color: #333; margin-bottom: -12px;">
+        Anda mempunyai pilihan, pada bila-bila masa, untuk tidak memberikan
+        Maklumat Peribadi Sensitif peserta atau membatalkan kebenaran anda kepada kami untuk memproses Maklumat Peribadi
+        Sensitif peserta. Bagaimanapun, kegagalan untuk mengemukakan Maklumat Peribadi Sensitif ini atau
+        pembatalan kebenaran anda untuk memproses Maklumat Peribadi peserta yang dikemukakan, akan mungkin
+        mengakibatkan kami tidak dapat memproses penyertaan peserta dalam acara tersebut.
+      </P>
+
+      <P style="font-size: 10px; line-height: 11px; color: #333; margin-bottom: -12px;"><span
+          style="color: #0cae4c;">Privacy notice</span></P>
+
+      <P style="font-size: 10px; line-height: 11px; color: #333; margin-bottom: -12px;">
+        By participating in the MILO% Champions Clinic (“The event”), you consenf for
+        /Vest/é Products Sdn. Bhd. and any of its holding, subsidiary or related companies as defined in the
+        Companies Act 2016 (“Nestlé /\4a/aysia Group”) and service providers, agents and contractors who provide
+        administrative and business suppod to os and act on our behalf (“Authorised Third Parties”)
+        (collectively “Organiser”, “us”, “we” or “our”) to process the participant's personal information
+        provided in the entry form for purposes of the event. This includes disclosing participants name to the
+        general public when they participate in our events by publishing their names, photographs and other
+        personal information without compensation for advertising and publicity purposes.
+      </P>
+
+      <P style="font-size: 10px; line-height: 11px; color: #333; margin-bottom: -12px;">
+        The Organiser may also use participant's personal information for purposes of
+        contacting and sending to you marketing and promotional information or materials a6out our products,
+        services, any promotions, samples, events or contests organised by fhe Organiser. Please indicate your
+        option on the form if you agree to the use of your personal information for this purpose.
+      </P>
+
+      <P style="font-size: 10px; line-height: 11px; color: #333; margin-bottom: -12px;">
+        In the event that you agree to share and disclose personal information of
+        participants whom you intend to refer to the Organiser, you acknowledge that you have obtained the
+        consent of that person to share and disclose hislher personal information to us and to lieing contacted
+        by us.
+      </P>
+
+      <P style="font-size: 10px; line-height: 11px; color: #333; margin-bottom: -12px;">
+        In respect of minors or individuals not legally competent to give consent, you
+        confirm that they have appointed you to act for them and to consent on their behalf to the processing of
+        their personal information in accordance with this privacy notice.</P>
+
+      <P style="font-size: 10px; line-height: 11px; color: #333; margin-bottom: -12px;">
+        At times the Organiser may retain Authorised Third Padies to process
+        padicipant's personal information. All such Authorised Third Parties are contractually 6ound to take
+        reasonable measures to keep information secure and not to use participant's personal information in any
+        way other than that which is specified here and in our privacy policy at
+        <span style="color: #0cae4c;">http.//www. nestle.com.my/ln fo/privacy_policy.</span>
+      </P>
+
+      <P style="font-size: 10px; line-height: 11px; color: #333; margin-bottom: -12px;">
+        The Organiser is a global company and participant's personal information may be transferred across borders.
+        The Organiser will ensure that the country their data is transferred to has
+        a simi/ar or equivalent personal information protection laws in place, as set out in our privacy policy
+        at <span style="color: #0cae4c;">http.//www.nestle.com.my/info/privacy_policy.</span>
+      </P>
+
+      <P style="font-size: 10px; line-height: 11px; color: #333; margin-bottom: -12px;">
+        All your written requests or queries should ice addressed to: Contact: Personal
+        Data Protection OfficerAddress: :
+        <span style="color: #0cae4c;">Nestlé Products Sdn. Bhd.,
+          Tingkat 22, 1 Powerhouse, 1 Persiaran Bandar Utama, Bandar Utama, 47830 Petaling Jaya, Selangor
+        </span> Or Weio Form:<span style="color: #0cae4c;">https.//www.nestle.com.my/contactus</span> Or Call us: <span
+          style="color: #0cae4c;">1-800-88-3433</span>
+      </P>
+
+      <P style="font-size: 10px; line-height: 11px; color: #333; margin-bottom: -12px;">
+        Please note the Organiser requires participant’s personal information in order
+        to process their participation in the event, without which we will not be able to process their
+        application.For a more detailed description of our privacy practices, please refer to our
+        <span style="color: #0cae4c;">Privacy Policy</span> at <span
+          style="color: #0cae4c;">http://www.nestle.com.my/info/privacy_policy</span>. We reserve the right to
+        update and amend this privacy notice or our privacy policy from time to time.
+      </P>
+
+      <P style="font-size: 10px; line-height: 11px; color: #333; margin-bottom: -12px;">
+        We may require
+        participants to provide their Sensitive
+        Personal Information
+        (such as data relating to their physical or mental health, including declaration of health) if they
+        apply to participate in the event.
+      </P>
+
+      <P style="font-size: 10px; line-height: 11px; color: #333; margin-bottom: -12px;">
+        We will only use participant's Sensitive Personal Information for the purposes
+        of the specific event and to advise them on suitable products to suit their current health status and
+        lifestyle.
+      </P>
+
+      <P style="font-size: 10px; line-height: 11px; color: #333; margin-bottom: -12px;">
+        You have the choice, at any time, not to provide participant’s Sensitive
+        Personal Information or to revoke your consent to us processing of their Sensitive Personal Information.
+        However, failure to provide such Sensitive Personal Information or revocation of your consent to process
+        Sensitive Personal Information provided may result in us being una6le to process participants
+        participation in the event.</P>
+    </div>
+  </div>
+</body>
+
+</html>
