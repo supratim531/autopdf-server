@@ -30,10 +30,11 @@ async def form_submit(request: Request):
 	print("1st", data)
 	print("2nd", dir(data))
 
-	name = data['data']['Name'][0]
-	email = data['data']['Email'][0]
-	fill_html_as_pdf(name, email)
-	send_email(email)
+	parent_name = data['data']['Coach/Guardian/Parent Name:'][0]
+	dob = data['data']['Date of Birth:\nMonth/Day/Year\n'][0]
+	print("Debug form data:", parent_name, dob)
+	# fill_html_as_pdf(name, email)
+	# send_email(email)
 
 	# Trigger your Python script or perform some action
 	subprocess.run(["python3", "script.py"])
