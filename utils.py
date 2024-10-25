@@ -1,4 +1,3 @@
-import os
 import smtplib
 
 from bs4 import BeautifulSoup
@@ -8,12 +7,14 @@ from email.mime.base import MIMEBase
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
+
 # Email details
 sender_email = 'galvanoai13@gmail.com'
 sender_password = 'n o y p q g j y i x c k s p i s'
-subject = 'Our PDF Automation Project'
+subject = 'PDF Automation Test'
 
-def send_email(receiver_email):
+
+def send_email(receiver_email, user_id):
   # Create the MIMEMultipart email object
   msg = MIMEMultipart()
   msg['From'] = sender_email
@@ -21,25 +22,8 @@ def send_email(receiver_email):
   msg['Subject'] = subject
 
   # Add email body
-  body = 'Hi, please find the attached HTML file.'
+  body = f'Hi, please find the link https://autopdfservermkc.onrender.com/download-pdf/{user_id}'
   msg.attach(MIMEText(body, 'plain'))
-
-  # File attachment path (HTML file)
-  file_path = 'filled_pdf.html'
-
-  # Open the HTML file to attach
-  with open(file_path, 'rb') as attachment:
-    mime_base = MIMEBase('application', 'octet-stream')
-    mime_base.set_payload(attachment.read())
-
-  # Encode file in base64
-  encoders.encode_base64(mime_base)
-
-  # Add the header for the attachment
-  mime_base.add_header('Content-Disposition', f'attachment; filename={os.path.basename(file_path)}')
-
-  # Attach the file to the email
-  msg.attach(mime_base)
 
   # Sending the email via Gmail's SMTP server
   try:
@@ -51,26 +35,26 @@ def send_email(receiver_email):
   except Exception as e:
     print(f"Failed to send email: {e}")
 
-def fill_html_as_pdf(name, email):
-	# Load the HTML file
-	with open('pdf.html', 'r') as file:
-		html_content = file.read()
 
-	# Parse the HTML using BeautifulSoup
-	soup = BeautifulSoup(html_content, 'html.parser')
+def fill_html_as_pdf(html_file_location, child_full_name, dob):
+  # Load the HTML file
+  with open('pdf.html', 'rb') as file:
+    html_content = file.read()
 
-	# Find the input field by its id and set the value for "Name"
-	name_input = soup.find('input', {'id': 'name'})
-	if name_input:
-		name_input['value'] = name
+  # Parse the HTML using BeautifulSoup
+  soup = BeautifulSoup(html_content, 'html.parser')
 
-	# Find the input field by its id and set the value for "Email"
-	email_input = soup.find('input', {'id': 'email'})
-	if email_input:
-		email_input['value'] = email
+  child_full_name_input = soup.find('input', {'id': 'child_full_name'})
+  if child_full_name_input:
+    child_full_name_input['value'] = child_full_name
 
-	# Save the modified HTML to a new file (or overwrite the original)
-	with open('filled_pdf.html', 'w') as file:
-		file.write(str(soup))
+  digits = [int(char) for char in dob if char.isdigit()]
+  for i in range(1, 9):
+    dob_input = soup.find('input', {'id': f'dob_{i}'})
+    dob_input['value'] = digits[i - 1]
 
-	print("HTML file updated successfully!")
+  # Save the modified HTML to a new file (or overwrite the original)
+  with open(html_file_location, 'wb') as file:
+    file.write(str(soup).encode("utf-8"))
+
+  print("New HTML file created successfully!!!")
