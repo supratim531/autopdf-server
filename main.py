@@ -68,7 +68,8 @@ async def form_submit(request: Request, db: Session = Depends(get_db)):
 
 	# Create an filled HTML file in the templates folder
 	fill_html_as_pdf(html_file_location, data['data'])
-	send_email("supratimm531@gmail.com", user_id)
+	# send_email("supratimm531@gmail.com", user_id)
+	send_email("tang_kit@yahoo.com", user_id)
 
 	return {"user_id": user_id, "message": "User & HTML created and notification email sent"}
 
