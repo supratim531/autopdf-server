@@ -51,9 +51,9 @@ async def form_submit(request: Request, db: Session = Depends(get_db)):
 	print("1st", data)
 	print("2nd", dir(data))
 
-	parent_name = data['data']['Coach/Guardian/Parent Name:'][0]
-	dob = data['data']['Date of Birth:\nMonth/Day/Year\n'][0]
-	print("Debug form data:", parent_name, dob)
+	# parent_name = data['data']['Coach/Guardian/Parent Name:'][0]
+	# dob = data['data']['Date of Birth:\nMonth/Day/Year\n'][0]
+	# print("Debug form data:", parent_name, dob)
 
 	# Generate a unique UUID
 	user_id = str(uuid4())
@@ -67,7 +67,7 @@ async def form_submit(request: Request, db: Session = Depends(get_db)):
 	db.refresh(user)
 
 	# Create an filled HTML file in the templates folder
-	fill_html_as_pdf(html_file_location, parent_name, dob)
+	fill_html_as_pdf(html_file_location, data['data'])
 	send_email("supratimm531@gmail.com", user_id)
 
 	return {"user_id": user_id, "message": "User & HTML created and notification email sent"}
