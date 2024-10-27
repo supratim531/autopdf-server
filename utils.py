@@ -157,9 +157,9 @@ def fill_html_as_pdf(html_file_location, data):
     yes_sick_check_input = soup.find('input', {'id': 'yes_sick_check'})
     if yes_sick_check_input:
       yes_sick_check_input['checked'] = 'checked'
-    sick_desc_input = soup.find('input', {'id': 'sick_desc'})
-    if sick_desc_input:
-      sick_desc_input['value'] = data["If YES to any medical conditions, please provide details"][0]
+    sick_desc_textarea = soup.find('textarea', {'id': 'sick_desc'})
+    if sick_desc_textarea:
+      sick_desc_textarea.string = data["If YES to any medical conditions, please provide details"][0]
   else:
     no_sick_check_input = soup.find('input', {'id': 'no_sick_check'})
     if no_sick_check_input:
