@@ -169,7 +169,7 @@ def fill_html_as_pdf(html_file_location, data):
   tshirt_size_checkboxes = ["XS", "S", "M", "L", "XL"]
   tshirt_size_choice = tshirt_size_checkboxes.index(tshirt_size)
   size_checkboxes = ["checkbox6", "checkbox7", "checkbox8", "checkbox9", "checkbox10"]
-  checkbox_input = soup.find('input', {'id': size_checkboxes[tshirt_size_choice-1]})
+  checkbox_input = soup.find('input', {'id': size_checkboxes[tshirt_size_choice]})
   if checkbox_input:
     checkbox_input['checked'] = 'checked'
 
