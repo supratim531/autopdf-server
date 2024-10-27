@@ -164,7 +164,7 @@ def fill_html_as_pdf(html_file_location, data):
     if no_sick_check_input:
       no_sick_check_input['checked'] = 'checked'
 
-  tshirt_size = data["T-Shirt Size"]
+  tshirt_size = data["T-Shirt Size"][0]
   tshirt_size_checkboxes = ["XS", "S", "M", "L", "XL"]
   tshirt_size_choice = tshirt_size_checkboxes.index(tshirt_size)
   size_checkboxes = ["checkbox6", "checkbox7", "checkbox8", "checkbox9", "checkbox10"]
