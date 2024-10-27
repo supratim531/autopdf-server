@@ -1,42 +1,63 @@
+import os
 import smtplib
 
 from bs4 import BeautifulSoup
 
-from email import encoders
-from email.mime.base import MIMEBase
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 
 # Email details
-sender_email = 'galvanoai13@gmail.com'
-sender_password = 'n o y p q g j y i x c k s p i s'
-subject = 'PDF Automation Test'
+email_subject = os.getenv("EMAIL_SUBJECT")
+sender_email = os.getenv("SENDER_EMAIL")
+sender_email_password = os.getenv("SENDER_EMAIL_PASSWORD")
 
 
-def send_email(receiver_email, user_id):
+def send_email(receiver_emails, email_body):
   # Create the MIMEMultipart email object
   msg = MIMEMultipart()
   msg['From'] = sender_email
-  msg['To'] = receiver_email
-  msg['Subject'] = subject
+  msg['Subject'] = email_subject
+  msg['To'] = ", ".join(receiver_emails)
 
   # Add email body
-  body = f'Hi, please find the link https://autopdfservermkc.onrender.com/download-pdf/{user_id}'
+  body = email_body
   msg.attach(MIMEText(body, 'plain'))
 
   # Sending the email via Gmail's SMTP server
   try:
     with smtplib.SMTP('smtp.gmail.com', 587) as server:
       server.starttls()  # Start TLS encryption
-      server.login(sender_email, sender_password)  # Login to your email
-      server.sendmail(sender_email, receiver_email, msg.as_string())  # Send the email
+      server.login(sender_email, sender_email_password)  # Login to your email
+      server.sendmail(sender_email, receiver_emails, msg.as_string())  # Send the email
       print("Email sent successfully!")
   except Exception as e:
     print(f"Failed to send email: {e}")
 
 
-{'data': {'City': ['NA'], 'Coach/Guardian/Parent Name:': ['Sanjay Majumder'], "Child's Name:": ['Supratim Majumder'], 'Identification Card No (IC | Passport):': ['NA'], 'Please select the relevant one:\n\n': ['Guardian'], 'Relationship to Participant': ['NA'], 'State': ['NA'], 'Gender (M/F):': ['Male'], 'Email': ['NA'], 'Emergency Contact Number': ['NA'], 'Address': ['NA'], 'Date of Birth\nMonth/Day/Year\n': ['30/10/2024'], 'Tel': ['NA'], 'Timestamp': ['26/10/2024 04:59:59']}}
+'''
+{
+  "Please select the relevant one": ["Parent"],
+  "Coach/Guardian/Parent Name": ["Sanjay Majumder"],
+  "Identification Card (IC | Passport)": ["42424242"],
+  "Participant's Name": ["Supratim Majumder"],
+  "Participant IC | Passport": ["84848484"],
+  "Gender (M/F)": ["Male"],
+  "Date of Birth": ["16/06/2002"],
+  "Tel": ["9163681672"],
+  "Email": ["a@gmail.com"],
+  "Address (Street)": ["14, Subhas Pally, BT Road, Baranagar"],
+  "Postcode": ["700108"],
+  "City": ["Kolkata"],
+  "State": ["WB"],
+  "Emergency Contact Name": ["Pampa Majumder"],
+  "Emergency Number": ["8981702261"],
+  "Relationship to Participant": ["Father"],
+  "Does your child have any health issues/allergies?": ["Yes"],
+  "If YES to any medical conditions, please provide details": ["Re dherrr"],
+  "T-Shirt Size": ["XL"],
+}
+'''
 def fill_html_as_pdf(html_file_location, data):
   # Load the HTML file
   with open('pdf.html', 'rb') as file:
@@ -45,22 +66,38 @@ def fill_html_as_pdf(html_file_location, data):
   # Parse the HTML using BeautifulSoup
   soup = BeautifulSoup(html_content, 'html.parser')
 
-  terms_checkboxes = ["checkbox1", "checkbox2", "checkbox3"]
+  terms_checkboxes = ["agree_1", "agree_2", "agree_3"]
   for term in terms_checkboxes:
     checkbox_term_input = soup.find('input', {'id': term})
     if checkbox_term_input:
       checkbox_term_input['checked'] = 'checked'
 
-  # Find the input field by its id and set the value for "Name"
-  name_input = soup.find('input', {'id': 'child_full_name'})
-  if name_input:
-    name_input['value'] = data["Child's Name"][0]
+  choice_coach_input = soup.find('input', {'id': 'coach'})
+  choice_parent_input = soup.find('input', {'id': 'parent'})
+  choice_guardian_input = soup.find('input', {'id': 'guardian'})
+  choice_senior_input = data["Please select the relevant one"][0]
+  if choice_senior_input == "Coach":
+    choice_coach_input['checked'] = 'checked'
+  elif choice_senior_input == "Parent":
+    choice_parent_input['checked'] = 'checked'
+  elif choice_senior_input == "Guardian":
+    choice_guardian_input['checked'] = 'checked'
 
-  passport = data["Identification Card No (IC | Passport)"][0]
-  passport_digits = [int(char) for char in passport if char.isdigit()]
-  for i in range(1, 11):
-    passport_input = soup.find('input', {'id': f'num_{i}'})
-    passport_input['value'] = passport_digits[i - 1]
+  senior_name_input = soup.find('input', {'id': 'senior_name'})
+  if senior_name_input:
+    senior_name_input['value'] = data["Coach/Guardian/Parent Name"][0]
+
+  senior_passport_input = soup.find('input', {'id': 'senior_passport'})
+  if senior_passport_input:
+    senior_passport_input['value'] = data["Identification Card (IC | Passport)"][0]
+
+  participant_name_input = soup.find('input', {'id': 'participant_name'})
+  if participant_name_input:
+    participant_name_input['value'] = data["Participant's Name"][0]
+
+  participant_passport_input = soup.find('input', {'id': 'participant_passport'})
+  if participant_passport_input:
+    participant_passport_input['value'] = data["Participant IC | Passport"][0]
 
   gender = data["Gender (M/F)"][0]
   if "M" in gender:
@@ -72,27 +109,27 @@ def fill_html_as_pdf(html_file_location, data):
   else:
     pass
 
-  dob = data['Date of Birth'][0]
+  dob = data["Date of Birth"][0]
   digits = [int(char) for char in dob if char.isdigit()]
   for i in range(1, 9):
     dob_input = soup.find('input', {'id': f'dob_{i}'})
     dob_input['value'] = digits[i - 1]
 
-  phone = data["Tel"][0]
-  phone_digits = [int(char) for char in phone if char.isdigit()]
-  for i in range(1, 11):
-    phone_input = soup.find('input', {'id': f'phn_{i}'})
-    phone_input['value'] = phone_digits[i - 1]
+  participant_phone_input = soup.find('input', {'id': f'participant_phone'})
+  if participant_phone_input:
+    participant_phone_input['value'] = data["Tel"][0]
 
-  email_input = soup.find('input', {'id': 'email'})
-  if email_input:
-    email_input['value'] = data["Email"][0]
+  participant_email_input = soup.find('input', {'id': 'participant_email'})
+  if participant_email_input:
+    participant_email_input['value'] = data["Email"][0]
 
-  postcode = "1234"
-  postcode_digit = [int(char) for char in postcode if char.isdigit()]
-  for i in range(1, 5):
-    postcode_input = soup.find('input', {'id': f'post_{i}'})
-    postcode_input['value'] = postcode_digit[i-1]
+  participant_address_textarea = soup.find('textarea', {'id': 'participant_address'})
+  if participant_address_textarea:
+    participant_address_textarea.string = data["Address (Street)"][0]
+
+  postcode_input = soup.find('input', {'id': 'postcode'})
+  if postcode_input:
+    postcode_input['value'] = data["Postcode"][0]
 
   city_input = soup.find('input', {'id': 'city'})
   if city_input:
@@ -102,50 +139,39 @@ def fill_html_as_pdf(html_file_location, data):
   if state_input:
     state_input['value'] = data["State"][0]
 
-  name_em_input = soup.find('input', {'id': 'name_em'})
-  if name_em_input:
-    name_em_input['value'] = "Arpan Ghosh"
+  emergency_contact_input = soup.find('input', {'id': 'emergency_contact'})
+  if emergency_contact_input:
+    emergency_contact_input['value'] = data["Emergency Contact Name"][0]
 
-  name_rel_input = soup.find('input', {'id': 'name_rel'})
-  if name_rel_input:
-    name_rel_input['value'] = data["Relationship to Participant"][0]
+  emergency_number_input = soup.find('input', {'id': 'emergency_number'})
+  if emergency_number_input:
+    emergency_number_input['value'] = data["Emergency Number"][0]
 
-  telephone = data["Emergency Contact Number"][0]
-  telephone_digits = [int(char) for char in telephone if char.isdigit()]
-  for i in range(1, 11):
-    telephone_input = soup.find('input', {'id': f'tel_{i}'})
-    telephone_input['value'] = telephone_digits[i - 1]
+  relationship_to_participant_input = soup.find('input', {'id': 'relationship_to_participant'})
+  if relationship_to_participant_input:
+    relationship_to_participant_input['value'] = data["Relationship to Participant"][0]
 
-  sickTrue = "Yes"
+  sickTrue = data["Does your child have any health issues/allergies?"][0]
   if "Yes" in sickTrue:
-    sick_input= soup.find('input', {'id': 'checkbox4'})
-    if sick_input:
-      sick_input['checked'] = 'checked'
-    sick_input_desc= soup.find('input', {'id': 'sick_desc'})
-    sick_input_desc['value'] = "I am sick"
+    yes_sick_check_input = soup.find('input', {'id': 'yes_sick_check'})
+    if yes_sick_check_input:
+      yes_sick_check_input['checked'] = 'checked'
+    sick_desc_input = soup.find('input', {'id': 'sick_desc'})
+    if sick_desc_input:
+      sick_desc_input['value'] = data["If YES to any medical conditions, please provide details"][0]
   else:
-    sick_input= soup.find('input', {'id': 'checkbox5'})
-    if sick_input:
-      sick_input['checked'] = 'checked'
+    no_sick_check_input = soup.find('input', {'id': 'no_sick_check'})
+    if no_sick_check_input:
+      no_sick_check_input['checked'] = 'checked'
 
-  size_checkboxes=["checkbox6", "checkbox7", "checkbox8", "checkbox9", "checkbox10"]
-  choice = 2
-  checkbox_input = soup.find('input', {'id': size_checkboxes[choice-1]})
+  tshirt_size = data["T-Shirt Size"]
+  tshirt_size_checkboxes = ["XS", "S", "M", "L", "XL"]
+  tshirt_size_choice = tshirt_size_checkboxes.index(tshirt_size)
+  size_checkboxes = ["checkbox6", "checkbox7", "checkbox8", "checkbox9", "checkbox10"]
+  checkbox_input = soup.find('input', {'id': size_checkboxes[tshirt_size_choice-1]})
 
   if checkbox_input:
     checkbox_input['checked'] = 'checked'
-
-  #doubt
-  # addresses = "Maruti Plaza Flat-3A, 244 Gorakshabasi Road, Nagerbaazar South Dumdum(M)"
-  addresses = data["Address"][0]
-  address = addresses.split(',', 3)
-  # print (address)
-  for i in range(len(address)):  # Use the length of the address list
-    address_input = soup.find('input', {'id': f'address_{i}'})
-    if address_input:  # Check if the input exists
-      address_input['value'] = address[i].strip()  # Use .strip() to remove leading/trailing spaces
-    else:
-      pass
 
   # Save the modified HTML to a new file (or overwrite the original)
   with open(html_file_location, 'wb') as file:

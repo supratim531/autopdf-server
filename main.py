@@ -2,6 +2,8 @@ import os
 
 from database import Base, engine, get_db
 
+from dotenv import load_dotenv
+
 from fastapi import Depends, FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
@@ -17,6 +19,12 @@ from utils import send_email, fill_html_as_pdf
 from uuid import uuid4
 
 
+# Load environment variables from .env file
+load_dotenv()
+admin_email = os.getenv("ADMIN_EMAIL")
+backend_url = os.getenv("BACKEND_URL")
+
+# Initialize FastAPI app
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
@@ -46,32 +54,47 @@ async def health():
 
 @app.post("/form-submit")
 async def form_submit(request: Request, db: Session = Depends(get_db)):
-	# Get the data sent by the Google Form
-	data = await request.json()
-	print("1st", data)
-	print("2nd", dir(data))
+	try:
+		# Get the data sent by the Google Form
+		data = await request.json()
+		print("user-data:", data)
+		print("metadata of user-data:", dir(data))
 
-	# parent_name = data['data']['Coach/Guardian/Parent Name:'][0]
-	# dob = data['data']['Date of Birth:\nMonth/Day/Year\n'][0]
-	# print("Debug form data:", parent_name, dob)
+		# email = data['data']['Email'][0]
+		# print("Check user's email:", email)
 
-	# Generate a unique UUID
-	user_id = str(uuid4())
-	html_file_name = f"{user_id}.html"
-	html_file_location = f"templates/{html_file_name}"
+		# Generate a unique UUID
+		user_id = str(uuid4())
+		html_file_name = f"{user_id}.html"
+		html_file_location = f"templates/{html_file_name}"
 
-	# Save the user in the database
-	user = User(user_id=user_id, html_file_name=html_file_name)
-	db.add(user)
-	db.commit()
-	db.refresh(user)
+		# Save the user in the database
+		user = User(user_id=user_id)
+		db.add(user)
+		db.commit()
+		db.refresh(user)
 
-	# Create an filled HTML file in the templates folder
-	fill_html_as_pdf(html_file_location, data['data'])
-	# send_email("supratimm531@gmail.com", user_id)
-	send_email("tang_kit@yahoo.com", user_id)
+		# Create an filled HTML file in the templates folder
+		fill_html_as_pdf(html_file_location, data['data'])
 
-	return {"user_id": user_id, "message": "User & HTML created and notification email sent"}
+		# After creation send the email to both user & admin
+		send_email(
+			["supratimm531@gmail.com"],
+			f'Hi, please find the filled pdf at {backend_url}/download-pdf/{user.user_id}'
+		)
+		send_email(
+			[admin_email],
+			f'{"supratimm531@gmail.com"} submitted the "MILO Kem Juara 2024 Entry Form". Find the filled pdf at {backend_url}/download-pdf/{user.user_id}'
+		)
+
+		return {"user_id": user_id, "message": "HTML file is created and notification email sent"}
+	except Exception as e:
+		print("error occurred after form submission:", e)
+		send_email(
+			[admin_email],
+			f'Something went wrong when {"supratimm531@gmail.com"} submitted the "MILO Kem Juara 2024 Entry Form"'
+		)
+		raise HTTPException(status_code=500, detail="Error occurred after form submission")
 
 
 @app.get("/download-pdf/{user_id}", response_class=HTMLResponse)

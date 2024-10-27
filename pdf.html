@@ -247,16 +247,16 @@
 		<div class="page2Content-3"
 			style="font-size: 12px; line-height: 12px; color: #333; margin-bottom: 4px; margin: 0px 1rem;">
 			<div>
-				<input type="checkbox" name="check" id="checkbox1" value="" checked disabled>
-				<label for="checkbox1" style="margin-top: 2px;">
+				<input type="checkbox" id="agree_1" name="agree_1" value="" checked disabled>
+				<label for="agree_1" style="margin-top: 2px;">
 					Sebagai jurulatih / penjaga / ibubapa, saya dengan ini mengesahkan bahawa saya
 					memahami dan bersetuju dengan semua Terma & Syarat yang dinyatakan dalam Syarat & Peraturan.
 				</label>
 			</div>
 
 			<div>
-				<input type="checkbox" name="check" id="checkbox2" value="" checked disabled>
-				<label for="checkbox2" style="margin-top: 2px;">
+				<input type="checkbox" id="agree_2" name="agree_2" value="" checked disabled>
+				<label for="agree_2" style="margin-top: 2px;">
 					<span>
 						Saya ingin menerima maklumat pemasaran dan promosi mengenai produk, perkhidmatan dan acara Penganjur pada
 						masa hadapan.
@@ -265,8 +265,8 @@
 			</div>
 
 			<div>
-				<input type="checkbox" name="check" id="checkbox3" value="" checked disabled>
-				<label for="checkbox3" style="margin-top: 2px;">
+				<input type="checkbox" id="agree_3" name="agree_3" value="" checked disabled>
+				<label for="agree_3" style="margin-top: 2px;">
 					Saya bersetuju dengan notis privasi, terma dan syarat penyertaan yang dinyatakan di halaman Notis Privasi.
 				</label>
 			</div>
@@ -292,23 +292,23 @@
 
 			<h6 style="color: #0c6638; margin: 8px auto; margin-left: 4px;">
 				<div style="gap: 2px; display: flex; align-items: center; margin-right: 1rem;">
-					<label for="parent_name" style="font-size: 12px; margin-top: 1px;">Nama:</label>
-					<input type="text" id="parent_name" name="parent_name" value="" style="flex: 1; border: none; outline: none;">
+					<label for="senior_name" style="font-size: 12px; margin-top: 1px;">Nama:</label>
+					<input type="text" id="senior_name" name="senior_name" value="" style="flex: 1; border: none; outline: none;">
 				</div>
 			</h6>
 
 			<div style="gap: 4px; display: flex; align-items: center; margin: 8px auto; margin-left: 4px;">
 				<span style="gap: 2px; display: flex; align-items: center; color: #0c6638; font-size: 12px; flex: 2;">
-					<label for="parent_passport" style="font-size: 12px; margin-top: 1px; font-weight: 600;">
+					<label for="senior_passport" style="font-size: 12px; margin-top: 1px; font-weight: 600;">
 						No Kad Pengenalan:
 					</label>
-					<input type="text" id="parent_passport" name="parent_passport" value=""
+					<input type="text" id="senior_passport" name="senior_passport" value=""
 						style="flex: 1; border: none; outline: none;">
 				</span>
 				<span
 					style="gap: 2px; display: flex; align-items: center; color: #0c6638; font-size: 12px; font-weight: 500; flex: 1;">
-					<label for="parent_sign" style="font-size: 12px; margin-top: 1px; font-weight: 600;">Tandatangan:</label>
-					<!-- <input type="text" id="parent_sign" name="parent_sign" value="" style="flex: 1; border: none; outline: none;"> -->
+					<label for="" style="font-size: 12px; margin-top: 1px; font-weight: 600;">Tandatangan:</label>
+					<!-- <input type="text" id="" name="" value="" style="flex: 1; border: none; outline: none;"> -->
 				</span>
 			</div>
 		</div>
@@ -325,16 +325,18 @@
 
 		<div class="form1">
 			<form style="margin-top: 15px; display: flex; flex-direction: column; margin-left: 20px;">
-				<label for="child_full_name" style="font-size: 12px; margin-bottom: 6px;">Nama penuh seperti dalam Kad
+				<label for="participant_name" style="font-size: 12px; margin-bottom: 6px;">Nama penuh seperti dalam Kad
 					Pengenalan (Encik/Cik):
 				</label>
-				<input type="text" id="child_full_name" name="child_full_name" value="" style="width: 740px;"><br><br>
+				<input type="text" id="participant_name" name="participant_name" value="" style="width: 740px;"><br><br>
 			</form>
 		</div>
 
 		<div class="form2" style="margin-top: -15px; display: flex; justify-content: space-between;">
 			<form style="margin-left: 20px;">
-				<label for="num" style="font-size: 12px; margin-bottom: 6px; display: flex">No. Kad Pengenalan :</label>
+				<label for="participant_passport" style="font-size: 12px; margin-bottom: 6px; display: flex">
+					No. Kad Pengenalan:
+				</label>
 				<input type="text" id="participant_passport" name="participant_passport" value="" style="min-width: 220px;">
 				<!-- <div class="ic" style="display: flex;">
 					<div class="input1">
@@ -428,7 +430,7 @@
 
 		<div class="form5" style="display: flex; justify-content: space-between;">
 			<form style="margin-top: 15px; display: flex; flex-direction: column; margin-left: 20px;">
-				<label for="name" style="font-size: 12px; margin-bottom: 6px">Telefon (bimbit):</label>
+				<label for="participant_phone" style="font-size: 12px; margin-bottom: 6px">Telefon (bimbit):</label>
 				<input type="text" id="participant_phone" name="participant_phone" value="" style="min-width: 220px;">
 				<!-- <div class="phNo" style="display: flex;">
 					<div class="input1">
@@ -467,9 +469,9 @@
 
 			<div class="form6" style="margin-left: 40px; margin-right: 12px; padding: 15px;">
 				<form>
-					<label for="name" style="font-size: 12px;">E-mel:</label>
+					<label for="participant_email" style="font-size: 12px;">E-mel:</label>
 					<div class="input10">
-						<input type="name" id="email" value="" style="width: 440px;">
+						<input type="name" id="participant_email" name="participant_email" value="" style="width: 440px;">
 					</div>
 				</form>
 			</div>
@@ -477,8 +479,8 @@
 
 		<div class="form7" style="margin-top: -16px;">
 			<form style="margin-top: 15px; display: flex; flex-direction: column; margin-left: 20px;">
-				<label for="name" style="font-size: 12px; margin-bottom: 4px;">Alamat:</label>
-				<textarea name="address" id="address" rows="5"
+				<label for="participant_address" style="font-size: 12px; margin-bottom: 4px;">Alamat:</label>
+				<textarea id="participant_address" name="participant_address" rows="5"
 					style="resize: none; width: 740px; font-family: Arial, sans-serif;"></textarea>
 				<!-- <input type="text" id="address_0" name="address_0" value="" style="width: 740px;">
 				<input type="text" id="address_1" name="address_1" value="" style="width: 740px;">
@@ -490,7 +492,7 @@
 			style="margin-top: 15px; margin-left: 20px; margin-right: 26px; display: flex; justify-content: space-between; margin-bottom: 35px;">
 			<div class="form9" style="margin-top: 4px;">
 				<form>
-					<label for="name" style="font-size: 12px; display: flex;">Poskod:</label>
+					<label for="postcode" style="font-size: 12px; display: flex;">Poskod:</label>
 					<div class="city" style="display: flex;">
 						<div class="input5">
 							<input type="text" id="postcode" name="postcode" value="">
@@ -515,7 +517,7 @@
 
 			<div class="form9" style="margin-top: 4px;">
 				<form>
-					<label for="name" style="font-size: 12px; display: flex;">Bandar:</label>
+					<label for="city" style="font-size: 12px; display: flex;">Bandar:</label>
 					<div class="city" style="display: flex;">
 						<div class="input5">
 							<input type="name" id="city" name="city" value="">
@@ -526,10 +528,10 @@
 
 			<div class="form10" style="margin-top: 4px;">
 				<form>
-					<label for="name" style="font-size: 12px; display: flex;">Negeri:</label>
+					<label for="state" style="font-size: 12px; display: flex;">Negeri:</label>
 					<div class="state" style="display: flex;">
 						<div class="input6">
-							<input type="name" id="state" value="">
+							<input type="name" id="state" name="state" value="">
 						</div>
 					</div>
 				</form>
@@ -540,19 +542,23 @@
 		<div class="herobar">NOMBOR KECEMASAN</div>
 		<div class="form11">
 			<form style="margin-top: 15px; display: flex; flex-direction: column; margin-left: 20px;">
-				<label for="name" style="font-size: 12px; margin-bottom: 6px;">Nama:</label>
-				<input type="text" id="name_em" name="name" value="" style="width: 740px;">
+				<label for="emergency_contact" style="font-size: 12px; margin-bottom: 6px;">Nama:</label>
+				<input type="text" id="emergency_contact" name="emergency_contact" value="" style="width: 740px;">
 			</form>
 		</div>
 		<div class="form12" style="display: flex;">
 			<form style="margin-top: 15px; display: flex; flex-direction: column; margin-left: 20px;">
-				<label for="name" style="font-size: 12px; margin-bottom: 6px;">Hubungan:</label>
-				<input type="text" id="name_rel" name="name_rel" value="" style="width: 340px;">
+				<label for="relationship_to_participant" style="font-size: 12px; margin-bottom: 6px;">Hubungan:</label>
+				<input type="text" id="relationship_to_participant" name="relationship_to_participant" value=""
+					style="width: 340px;">
 			</form>
 			<div class="form13" style="display: flex; margin-left: 40px;">
 				<form style="margin-top: 15px; display: flex; flex-direction: column; margin-left: 20px;">
-					<label for="name" style="font-size: 12px; margin-bottom: 6px">Telefon (bimbit):</label>
+					<label for="emergency_number" style="font-size: 12px; margin-bottom: 6px">Telefon (bimbit):</label>
 					<div class="phNo" style="display: flex;">
+						<div class="input1" style="margin-bottom: 35px;">
+							<input type="text" id="emergency_number" name="emergency_number" value="" style="width: 220px;">
+						</div>
 						<!-- <div class="input1">
 							<input type="name" id="tel_1" value="" style="width: 15px;">
 						</div> -->
@@ -584,9 +590,6 @@
 						<!-- <div class="input10" style="margin-bottom: 35px;">
 							<input type="name" id="tel_10" value="" style="width: 15px;">
 						</div> -->
-						<div class="input1" style="margin-bottom: 35px;">
-							<input type="text" id="emergency_number" name="emergency_number" value="" style="width: 220px;">
-						</div>
 					</div>
 				</form>
 			</div>
@@ -600,8 +603,8 @@
 			</span>
 		</div>
 		<div class="checkbox4" style="margin-left: 18px; font-size: 12px; gap: 2px; display: flex; align-items: center;">
-			<input type="checkbox" name="check" id="checkbox4" value="">
-			<label for="checkbox4" style="margin-top: 1px;">Ya. Sila Jelaskan Tidak</label>
+			<input type="checkbox" id="yes_sick_check" name="yes_sick_check" value="">
+			<label for="yes_sick_check" style="margin-top: 1px;">Ya. Sila Jelaskan Tidak</label>
 		</div>
 		<div class="input20" style="display: flex; margin-bottom: 35px;">
 			<form style="margin-top: 15px; display: flex; flex-direction: column; margin-left: 20px;">
@@ -611,8 +614,8 @@
 					style="resize: none; width: 390px; height: 70px; margin-left: 190px; margin-top: -30px; font-family: Arial, sans-serif;"></textarea>
 			</form>
 			<div class="checkbox5" style="margin-left: 20px; font-size: 12px;padding: 25px; margin-top: -42px;">
-				<input type="checkbox" name="check" id="checkbox5" value="">
-				<label for="checkbox5">Tidak</label>
+				<input type="checkbox" id="no_sick_check" name="no_sick_check" value="">
+				<label for="no_sick_check">Tidak</label>
 			</div>
 		</div>
 
@@ -627,20 +630,20 @@
 				</div>
 				<div class="checkbox7" style="display: flex; flex-direction: row-reverse; margin-left: 12px;">
 					<input type="checkbox" name="check" id="checkbox7" value=""> <label for="checkbox7"
-						style="font-size: 12PX; margin-top: 3px;">M:</label>
+						style="font-size: 12PX; margin-top: 3px;">S:</label>
 				</div>
 				<div class="checkbox8" style="display: flex; flex-direction: row-reverse; margin-left: 12px;">
 					<input type="checkbox" name="check" id="checkbox8" value="">
-					<label for="checkbox8" style="font-size: 12PX; margin-top: 3px;">XL:</label>
+					<label for="checkbox8" style="font-size: 12PX; margin-top: 3px;">M:</label>
 				</div>
 				<div class="checkbox9" style="display: flex; flex-direction: row-reverse; margin-left: 41px; margin-top: 12px;">
 					<input type="checkbox" name="check" id="checkbox9" value="">
-					<label for="checkbox9" style="font-size: 12PX; margin-top: 3px;">S:</label>
+					<label for="checkbox9" style="font-size: 12PX; margin-top: 3px;">L:</label>
 				</div>
 				<div class="checkbox10"
 					style="display: flex; flex-direction: row-reverse; margin-left: 16px; margin-top: 12px;">
 					<input type="checkbox" name="check" id="checkbox10" value="">
-					<label for="checkbox10" style="font-size: 12PX; margin-top: 3px;">L:</label>
+					<label for="checkbox10" style="font-size: 12PX; margin-top: 3px;">XL:</label>
 				</div>
 			</div>
 		</div>
@@ -791,8 +794,9 @@
 				mengakibatkan kami tidak dapat memproses penyertaan peserta dalam acara tersebut.
 			</P>
 
-			<P style="font-size: 10px; line-height: 11px; color: #333; margin-bottom: -12px;"><span
-					style="color: #0cae4c;">Privacy notice</span></P>
+			<P style="font-size: 10px; line-height: 11px; color: #333; margin-bottom: -12px;">
+				<span style="color: #0cae4c;">Privacy notice</span>
+			</P>
 
 			<P style="font-size: 10px; line-height: 11px; color: #333; margin-bottom: -12px;">
 				By participating in the MILO% Champions Clinic (“The event”), you consenf for
@@ -822,7 +826,8 @@
 			<P style="font-size: 10px; line-height: 11px; color: #333; margin-bottom: -12px;">
 				In respect of minors or individuals not legally competent to give consent, you
 				confirm that they have appointed you to act for them and to consent on their behalf to the processing of
-				their personal information in accordance with this privacy notice.</P>
+				their personal information in accordance with this privacy notice.
+			</P>
 
 			<P style="font-size: 10px; line-height: 11px; color: #333; margin-bottom: -12px;">
 				At times the Organiser may retain Authorised Third Padies to process
@@ -876,7 +881,8 @@
 				Personal Information or to revoke your consent to us processing of their Sensitive Personal Information.
 				However, failure to provide such Sensitive Personal Information or revocation of your consent to process
 				Sensitive Personal Information provided may result in us being una6le to process participants
-				participation in the event.</P>
+				participation in the event.
+			</P>
 		</div>
 	</div>
 </body>
