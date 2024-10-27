@@ -84,7 +84,7 @@ async def form_submit(request: Request, db: Session = Depends(get_db)):
 		)
 		send_email(
 			[admin_email],
-			f'{"supratimm531@gmail.com"} submitted the "MILO Kem Juara 2024 Entry Form". Find the filled pdf at {backend_url}/download-pdf/{user.user_id}'
+			f'{email_address} submitted the "MILO Kem Juara 2024 Entry Form". Find the filled pdf at {backend_url}/download-pdf/{user.user_id}'
 		)
 
 		return {"user_id": user_id, "message": "HTML file is created and notification email sent"}
@@ -92,7 +92,7 @@ async def form_submit(request: Request, db: Session = Depends(get_db)):
 		print("error occurred after form submission:", e)
 		send_email(
 			[admin_email, email_address],
-			f'Something went wrong when "MILO Kem Juara 2024 Entry Form" submitted from {"supratimm531@gmail.com"}'
+			f'Something went wrong when "MILO Kem Juara 2024 Entry Form" submitted from {email_address}'
 		)
 		raise HTTPException(status_code=500, detail="Error occurred after form submission")
 
