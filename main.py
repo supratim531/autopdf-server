@@ -60,8 +60,8 @@ async def form_submit(request: Request, db: Session = Depends(get_db)):
 		print("user-data:", data)
 		print("metadata of user-data:", dir(data))
 
-		# email = data['data']['Email'][0]
-		# print("Check user's email:", email)
+		email_address = data['data']['Email Address'][0]
+		print("Check user's email:", email_address)
 
 		# Generate a unique UUID
 		user_id = str(uuid4())
@@ -79,7 +79,7 @@ async def form_submit(request: Request, db: Session = Depends(get_db)):
 
 		# After creation send the email to both user & admin
 		send_email(
-			["supratimm531@gmail.com"],
+			[email_address],
 			f'Hi, please find the filled pdf at {backend_url}/download-pdf/{user.user_id}'
 		)
 		send_email(
@@ -91,8 +91,8 @@ async def form_submit(request: Request, db: Session = Depends(get_db)):
 	except Exception as e:
 		print("error occurred after form submission:", e)
 		send_email(
-			[admin_email],
-			f'Something went wrong when {"supratimm531@gmail.com"} submitted the "MILO Kem Juara 2024 Entry Form"'
+			[admin_email, email_address],
+			f'Something went wrong when "MILO Kem Juara 2024 Entry Form" submitted from {"supratimm531@gmail.com"}'
 		)
 		raise HTTPException(status_code=500, detail="Error occurred after form submission")
 

@@ -3,6 +3,8 @@ import smtplib
 
 from bs4 import BeautifulSoup
 
+from datetime import datetime
+
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
@@ -106,11 +108,10 @@ def fill_html_as_pdf(html_file_location, data):
   elif "F" in gender:
     gender_input = soup.find('input', {'id': 'gender_2'})
     gender_input['value'] = "F"
-  else:
-    pass
 
   dob = data["Date of Birth"][0]
-  digits = [int(char) for char in dob if char.isdigit()]
+  dob_formatted = datetime.strptime(dob, "%m/%d/%Y").strftime("%m%d%Y")
+  digits = [int(char) for char in dob_formatted]
   for i in range(1, 9):
     dob_input = soup.find('input', {'id': f'dob_{i}'})
     dob_input['value'] = digits[i - 1]
@@ -169,7 +170,6 @@ def fill_html_as_pdf(html_file_location, data):
   tshirt_size_choice = tshirt_size_checkboxes.index(tshirt_size)
   size_checkboxes = ["checkbox6", "checkbox7", "checkbox8", "checkbox9", "checkbox10"]
   checkbox_input = soup.find('input', {'id': size_checkboxes[tshirt_size_choice-1]})
-
   if checkbox_input:
     checkbox_input['checked'] = 'checked'
 
