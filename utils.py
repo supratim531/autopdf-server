@@ -43,9 +43,8 @@ def send_email(receiver_emails, email_body):
   logger = setup_logger()
   logger.info(f"Sending email from {sender_email} to {receiver_emails}")
 
-  message = Mail(sender_email, receiver_emails[0], email_subject, email_body)
+  message = Mail(sender_email, receiver_emails, email_subject, email_body)
 
-  # Sending the email using Mailgun API
   try:
     sg = SendGridAPIClient(os.getenv("SENDGRID_API_KEY"))
     response = sg.send(message)
