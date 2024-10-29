@@ -51,9 +51,9 @@ def send_email(receiver_emails, email_body):
 
   # Sending the email via Gmail's SMTP server
   try:
-    with smtplib.SMTP_SSL('smtp.gmail.com', 587) as server:
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
       try:
-        server.starttls()
+        server.set_debuglevel(1)
         server.login(sender_email, sender_email_password)
       except Exception as e:
         logger.info(f"Failed to login to Gmail: {e}")
