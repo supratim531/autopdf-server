@@ -39,19 +39,19 @@ def setup_logger():
   return logger
 
 
-def send_email(receiver_emails, email_body):
-  logger = setup_logger()
-  logger.info(f"Sending email from {sender_email} to {receiver_emails}")
+# def send_email(receiver_emails, email_body):
+#   logger = setup_logger()
+#   logger.info(f"Sending email from {sender_email} to {receiver_emails}")
 
-  message = Mail(sender_email, receiver_emails, email_subject, email_body)
+#   message = Mail(sender_email, receiver_emails, email_subject, email_body)
 
-  try:
-    sg = SendGridAPIClient(os.getenv("SENDGRID_API_KEY"))
-    response = sg.send(message)
-    logger.info(f"sendgrid response: {response.status_code}, {response.body}, {response.headers}")
-    logger.info(f"Email sent successfully to {receiver_emails}")
-  except Exception as e:
-    logger.info(f"General error occurred: {e}")
+#   try:
+#     sg = SendGridAPIClient(os.getenv("SENDGRID_API_KEY"))
+#     response = sg.send(message)
+#     logger.info(f"sendgrid response: {response.status_code}, {response.body}, {response.headers}")
+#     logger.info(f"Email sent successfully to {receiver_emails}")
+#   except Exception as e:
+#     logger.info(f"General error occurred: {e}")
 
 
 # def send_email(receiver_emails, email_body):
@@ -93,34 +93,34 @@ def send_email(receiver_emails, email_body):
 #     logger.info(f"General error occurred: {e}")
 
 
-# def send_email(receiver_emails, email_body):
-#   logger = setup_logger()
-#   logger.info(f"Sending email to {receiver_emails}")
+def send_email(receiver_emails, email_body):
+  logger = setup_logger()
+  logger.info(f"Sending email to {receiver_emails}")
 
-#   # Create the MIMEMultipart email object
-#   msg = MIMEMultipart()
-#   msg['From'] = sender_email
-#   msg['Subject'] = email_subject
-#   msg['To'] = ", ".join(receiver_emails)
+  # Create the MIMEMultipart email object
+  msg = MIMEMultipart()
+  msg['From'] = sender_email
+  msg['Subject'] = email_subject
+  msg['To'] = ", ".join(receiver_emails)
 
-#   # Add email body
-#   body = email_body
-#   msg.attach(MIMEText(body, 'plain'))
+  # Add email body
+  body = email_body
+  msg.attach(MIMEText(body, 'plain'))
 
-#   # Sending the email via Gmail's SMTP server
-#   try:
-#     with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:  # SSL connection
-#       server.set_debuglevel(1)  # Enable debug output
-#       server.login(sender_email, sender_email_password)
-#       server.sendmail(sender_email, receiver_emails, msg.as_string())
-#       print("Email sent successfully!")
-#       logger.info(f"Email sent successfully to {receiver_emails}")
-#   except smtplib.SMTPException as e:
-#     print(f"SMTP error occurred: {e}")
-#     logger.info(f"SMTP error occurred: {e}")
-#   except Exception as e:
-#     print(f"General error occurred: {e}")
-#     logger.info(f"General error occurred: {e}")
+  # Sending the email via Gmail's SMTP server
+  try:
+    with smtplib.SMTP_SSL('smtp.gmail.com', 587) as server:  # SSL connection
+      server.starttls()
+      server.login(sender_email, sender_email_password)
+      server.sendmail(sender_email, receiver_emails, msg.as_string())
+      print("Email sent successfully!")
+      logger.info(f"Email sent successfully to {receiver_emails}")
+  except smtplib.SMTPException as e:
+    print(f"SMTP error occurred: {e}")
+    logger.info(f"SMTP error occurred: {e}")
+  except Exception as e:
+    print(f"General error occurred: {e}")
+    logger.info(f"General error occurred: {e}")
 
 
 '''
