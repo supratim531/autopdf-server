@@ -113,6 +113,7 @@ def send_email(receiver_emails, email_body):
       # server.starttls()
 
       try:
+        logger.info(f"cred: {sender_email} {sender_email_password}")
         server.set_debuglevel(1)
         server.login(sender_email, sender_email_password)
       except Exception as e:
