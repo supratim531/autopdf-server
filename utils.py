@@ -1,5 +1,6 @@
 import os
 import logging
+import requests
 import smtplib
 
 from bs4 import BeautifulSoup
@@ -39,30 +40,69 @@ def send_email(receiver_emails, email_body):
   logger = setup_logger()
   logger.info(f"Sending email to {receiver_emails}")
 
-  # Create the MIMEMultipart email object
-  msg = MIMEMultipart()
-  msg['From'] = sender_email
-  msg['Subject'] = email_subject
-  msg['To'] = ", ".join(receiver_emails)
+  # Mailgun API settings
+  domain = os.getenv("MAILGUN_DOMAIN")
+  api_key = os.getenv("MAILGUN_API_KEY")
+  sender_email = os.getenv("MAILGUN_MAIL_ADDRESS")
 
-  # Add email body
-  body = email_body
-  msg.attach(MIMEText(body, 'plain'))
+  # Prepare the data for the API request
+  data = {
+    'from': sender_email,
+    'to': receiver_emails,
+    'subject': email_subject,  # Replace with the desired email subject
+    'text': email_body
+  }
 
-  # Sending the email via Gmail's SMTP server
+  # Sending the email using Mailgun API
   try:
-    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:  # SSL connection
-      server.set_debuglevel(1)  # Enable debug output
-      server.login(sender_email, sender_email_password)
-      server.sendmail(sender_email, receiver_emails, msg.as_string())
+    response = requests.post(
+      f'https://api.mailgun.net/v3/{domain}/messages',
+      auth=('api', api_key),
+      data=data
+    )
+
+    if response.status_code == 200:
       print("Email sent successfully!")
       logger.info(f"Email sent successfully to {receiver_emails}")
-  except smtplib.SMTPException as e:
-    print(f"SMTP error occurred: {e}")
-    logger.info(f"SMTP error occurred: {e}")
+    else:
+      print(f"Failed to send email: {response.status_code} {response.text}")
+      logger.info(f"Failed to send email: {response.status_code} {response.text}")
+  except requests.exceptions.RequestException as e:
+    print(f"Request error occurred: {e}")
+    logger.info(f"Request error occurred: {e}")
   except Exception as e:
     print(f"General error occurred: {e}")
     logger.info(f"General error occurred: {e}")
+
+
+# def send_email(receiver_emails, email_body):
+#   logger = setup_logger()
+#   logger.info(f"Sending email to {receiver_emails}")
+
+#   # Create the MIMEMultipart email object
+#   msg = MIMEMultipart()
+#   msg['From'] = sender_email
+#   msg['Subject'] = email_subject
+#   msg['To'] = ", ".join(receiver_emails)
+
+#   # Add email body
+#   body = email_body
+#   msg.attach(MIMEText(body, 'plain'))
+
+#   # Sending the email via Gmail's SMTP server
+#   try:
+#     with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:  # SSL connection
+#       server.set_debuglevel(1)  # Enable debug output
+#       server.login(sender_email, sender_email_password)
+#       server.sendmail(sender_email, receiver_emails, msg.as_string())
+#       print("Email sent successfully!")
+#       logger.info(f"Email sent successfully to {receiver_emails}")
+#   except smtplib.SMTPException as e:
+#     print(f"SMTP error occurred: {e}")
+#     logger.info(f"SMTP error occurred: {e}")
+#   except Exception as e:
+#     print(f"General error occurred: {e}")
+#     logger.info(f"General error occurred: {e}")
 
 
 '''
