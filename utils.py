@@ -1,6 +1,5 @@
 import os
 import logging
-import requests
 import smtplib
 
 from bs4 import BeautifulSoup
@@ -12,14 +11,11 @@ from email.mime.multipart import MIMEMultipart
 
 from logging.handlers import RotatingFileHandler
 
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
-
 
 # Email details
-sender_email = "galvanoai13@gmail.com"
-sender_email_password = "n o y p q g j y i x c k s p i s"
-email_subject = "Form Submission - MILO Kem Juara 2024 Entry Form"
+email_subject = os.getenv("EMAIL_SUBJECT")
+sender_email = os.getenv("SENDER_EMAIL")
+sender_email_password = os.getenv("SENDER_EMAIL_PASSWORD")
 
 
 def setup_logger():
@@ -39,63 +35,9 @@ def setup_logger():
   return logger
 
 
-# def send_email(receiver_emails, email_body):
-#   logger = setup_logger()
-#   logger.info(f"Sending email from {sender_email} to {receiver_emails}")
-
-#   message = Mail(sender_email, receiver_emails, email_subject, email_body)
-
-#   try:
-#     sg = SendGridAPIClient(os.getenv("SENDGRID_API_KEY"))
-#     response = sg.send(message)
-#     logger.info(f"sendgrid response: {response.status_code}, {response.body}, {response.headers}")
-#     logger.info(f"Email sent successfully to {receiver_emails}")
-#   except Exception as e:
-#     logger.info(f"General error occurred: {e}")
-
-
-# def send_email(receiver_emails, email_body):
-#   logger = setup_logger()
-#   logger.info(f"Sending email to {receiver_emails}")
-
-#   # Mailgun API settings
-#   domain = os.getenv("MAILGUN_DOMAIN")
-#   api_key = os.getenv("MAILGUN_API_KEY")
-#   sender_email = os.getenv("MAILGUN_MAIL_ADDRESS")
-
-#   # Prepare the data for the API request
-#   data = {
-#     'from': sender_email,
-#     'to': receiver_emails,
-#     'subject': email_subject,
-#     'text': email_body
-#   }
-
-#   # Sending the email using Mailgun API
-#   try:
-#     response = requests.post(
-#       f'https://api.mailgun.net/v3/{domain}/messages',
-#       auth=('api', api_key),
-#       data=data
-#     )
-
-#     if response.status_code == 200:
-#       print("Email sent successfully!")
-#       logger.info(f"Email sent successfully to {receiver_emails}")
-#     else:
-#       print(f"Failed to send email: {response.status_code} {response.text}")
-#       logger.info(f"Failed to send email: {response.status_code} {response.text}")
-#   except requests.exceptions.RequestException as e:
-#     print(f"Request error occurred: {e}")
-#     logger.info(f"Request error occurred: {e}")
-#   except Exception as e:
-#     print(f"General error occurred: {e}")
-#     logger.info(f"General error occurred: {e}")
-
-
 def send_email(receiver_emails, email_body):
   logger = setup_logger()
-  logger.info(f"Sending email to {receiver_emails}")
+  logger.info(f"Sending email from {sender_email} to {receiver_emails}")
 
   # Create the MIMEMultipart email object
   msg = MIMEMultipart()
@@ -109,22 +51,18 @@ def send_email(receiver_emails, email_body):
 
   # Sending the email via Gmail's SMTP server
   try:
-    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
+    with smtplib.SMTP_SSL('smtp.gmail.com', 587) as server:
       try:
-        server.set_debuglevel(1)
+        server.starttls()
         server.login(sender_email, sender_email_password)
       except Exception as e:
-        print(f"Failed to login to Gmail: {e}")
         logger.info(f"Failed to login to Gmail: {e}")
 
       server.sendmail(sender_email, receiver_emails, msg.as_string())
-      print("Email sent successfully!")
       logger.info(f"Email sent successfully to {receiver_emails}")
   except smtplib.SMTPException as e:
-    print(f"SMTP error occurred: {e}")
     logger.info(f"SMTP error occurred: {e}")
   except Exception as e:
-    print(f"General error occurred: {e}")
     logger.info(f"General error occurred: {e}")
 
 
@@ -139,6 +77,7 @@ def send_email(receiver_emails, email_body):
   "Date of Birth": ["16/06/2002"],
   "Tel": ["9163681672"],
   "Email": ["a@gmail.com"],
+  "Email Address": ["supratimm531@gmail.com"],
   "Address (Street)": ["14, Subhas Pally, BT Road, Baranagar"],
   "Postcode": ["700108"],
   "City": ["Kolkata"],
@@ -152,6 +91,8 @@ def send_email(receiver_emails, email_body):
 }
 '''
 def fill_html_as_pdf(html_file_location, data):
+  logger = setup_logger()
+
   # Load the HTML file
   with open('pdf.html', 'rb') as file:
     html_content = file.read()
@@ -268,4 +209,4 @@ def fill_html_as_pdf(html_file_location, data):
   with open(html_file_location, 'wb') as file:
     file.write(str(soup).encode("utf-8"))
 
-  print("New HTML file created successfully!!!")
+  logger.info("New HTML file created successfully!!!")

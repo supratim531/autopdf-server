@@ -2,8 +2,6 @@ import os
 
 from database import Base, engine, get_db
 
-from dotenv import load_dotenv
-
 from fastapi import Depends, FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
@@ -21,8 +19,6 @@ from uuid import uuid4
 
 logger = setup_logger()
 
-# Load environment variables from .env file
-load_dotenv()
 admin_email = os.getenv("ADMIN_EMAIL")
 backend_url = os.getenv("BACKEND_URL")
 
@@ -59,11 +55,11 @@ async def form_submit(request: Request, db: Session = Depends(get_db)):
 	try:
 		# Get the data sent by the Google Form
 		data = await request.json()
-		print("user-data:", data)
-		print("metadata of user-data:", dir(data))
+		logger.info(f"user-data: {data}")
+		logger.info(f"metadata of user-data: {dir(data)}")
 
 		email_address = data['data']['Email Address'][0]
-		print("Check user's email:", email_address)
+		logger.info(f"Check user's email: {email_address}")
 
 		# Generate a unique UUID
 		user_id = str(uuid4())
@@ -92,7 +88,6 @@ async def form_submit(request: Request, db: Session = Depends(get_db)):
 
 		return {"user_id": user_id, "message": "HTML file is created and notification email sent"}
 	except Exception as e:
-		print("error occurred after form submission:", e)
 		logger.info(f"error occurred after form submission: {e}")
 		send_email(
 			[admin_email, email_address],
@@ -109,6 +104,5 @@ async def download_pdf(user_id: str, request: Request):
 		logger.info(f"File not found at requested path: {backend_url}/download-pdf/{user_id}")
 		raise HTTPException(status_code=404, detail="File not found")
 
-	# Render the HTML template with Jinja2
 	logger.info(f"File found at requested path: {backend_url}/download-pdf/{user_id}")
 	return templates.TemplateResponse(html_file_name, {"request": request})
