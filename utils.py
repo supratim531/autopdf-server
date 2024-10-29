@@ -111,7 +111,13 @@ def send_email(receiver_emails, email_body):
   try:
     with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:  # SSL connection
       # server.starttls()
-      server.login(sender_email, sender_email_password)
+
+      try:
+        server.login(sender_email, sender_email_password)
+      except Exception as e:
+        print(f"Failed to login to Gmail: {e}")
+        logger.info(f"Failed to login to Gmail: {e}")
+
       server.sendmail(sender_email, receiver_emails, msg.as_string())
       print("Email sent successfully!")
       logger.info(f"Email sent successfully to {receiver_emails}")
