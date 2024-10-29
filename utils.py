@@ -109,8 +109,8 @@ def send_email(receiver_emails, email_body):
 
   # Sending the email via Gmail's SMTP server
   try:
-    with smtplib.SMTP_SSL('smtp.gmail.com', 587) as server:  # SSL connection
-      server.starttls()
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:  # SSL connection
+      # server.starttls()
       server.login(sender_email, sender_email_password)
       server.sendmail(sender_email, receiver_emails, msg.as_string())
       print("Email sent successfully!")
