@@ -12,6 +12,9 @@ from email.mime.multipart import MIMEMultipart
 
 from logging.handlers import RotatingFileHandler
 
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+
 
 # Email details
 email_subject = os.getenv("EMAIL_SUBJECT")
@@ -38,41 +41,57 @@ def setup_logger():
 
 def send_email(receiver_emails, email_body):
   logger = setup_logger()
-  logger.info(f"Sending email to {receiver_emails}")
+  logger.info(f"Sending email from {sender_email}to {receiver_emails}")
 
-  # Mailgun API settings
-  domain = os.getenv("MAILGUN_DOMAIN")
-  api_key = os.getenv("MAILGUN_API_KEY")
-  sender_email = os.getenv("MAILGUN_MAIL_ADDRESS")
-
-  # Prepare the data for the API request
-  data = {
-    'from': sender_email,
-    'to': receiver_emails,
-    'subject': email_subject,  # Replace with the desired email subject
-    'text': email_body
-  }
+  message = Mail(sender_email, receiver_emails, email_subject, email_body)
 
   # Sending the email using Mailgun API
   try:
-    response = requests.post(
-      f'https://api.mailgun.net/v3/{domain}/messages',
-      auth=('api', api_key),
-      data=data
-    )
-
-    if response.status_code == 200:
-      print("Email sent successfully!")
-      logger.info(f"Email sent successfully to {receiver_emails}")
-    else:
-      print(f"Failed to send email: {response.status_code} {response.text}")
-      logger.info(f"Failed to send email: {response.status_code} {response.text}")
-  except requests.exceptions.RequestException as e:
-    print(f"Request error occurred: {e}")
-    logger.info(f"Request error occurred: {e}")
+    sg = SendGridAPIClient(os.getenv("SENDGRID_API_KEY"))
+    response = sg.send(message)
+    logger.info(f"sendgrid response: {response.status_code}, {response.body}, {response.headers}")
+    logger.info(f"Email sent successfully to {receiver_emails}")
   except Exception as e:
-    print(f"General error occurred: {e}")
     logger.info(f"General error occurred: {e}")
+
+
+# def send_email(receiver_emails, email_body):
+#   logger = setup_logger()
+#   logger.info(f"Sending email to {receiver_emails}")
+
+#   # Mailgun API settings
+#   domain = os.getenv("MAILGUN_DOMAIN")
+#   api_key = os.getenv("MAILGUN_API_KEY")
+#   sender_email = os.getenv("MAILGUN_MAIL_ADDRESS")
+
+#   # Prepare the data for the API request
+#   data = {
+#     'from': sender_email,
+#     'to': receiver_emails,
+#     'subject': email_subject,
+#     'text': email_body
+#   }
+
+#   # Sending the email using Mailgun API
+#   try:
+#     response = requests.post(
+#       f'https://api.mailgun.net/v3/{domain}/messages',
+#       auth=('api', api_key),
+#       data=data
+#     )
+
+#     if response.status_code == 200:
+#       print("Email sent successfully!")
+#       logger.info(f"Email sent successfully to {receiver_emails}")
+#     else:
+#       print(f"Failed to send email: {response.status_code} {response.text}")
+#       logger.info(f"Failed to send email: {response.status_code} {response.text}")
+#   except requests.exceptions.RequestException as e:
+#     print(f"Request error occurred: {e}")
+#     logger.info(f"Request error occurred: {e}")
+#   except Exception as e:
+#     print(f"General error occurred: {e}")
+#     logger.info(f"General error occurred: {e}")
 
 
 # def send_email(receiver_emails, email_body):
