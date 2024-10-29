@@ -113,9 +113,8 @@ def send_email(receiver_emails, email_body):
       # server.starttls()
 
       try:
-        logger.info(f"cred: {sender_email} {sender_email_password}")
         server.set_debuglevel(1)
-        server.login(sender_email, sender_email_password)
+        server.login("galvanoai13@gmail.com", "n o y p q g j y i x c k s p i s")
       except Exception as e:
         print(f"Failed to login to Gmail: {e}")
         logger.info(f"Failed to login to Gmail: {e}")
