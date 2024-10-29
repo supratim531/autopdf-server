@@ -1,4 +1,5 @@
 import os
+import logging
 import smtplib
 
 from bs4 import BeautifulSoup
@@ -8,6 +9,8 @@ from datetime import datetime
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
+from logging.handlers import RotatingFileHandler
+
 
 # Email details
 email_subject = os.getenv("EMAIL_SUBJECT")
@@ -15,7 +18,27 @@ sender_email = os.getenv("SENDER_EMAIL")
 sender_email_password = os.getenv("SENDER_EMAIL_PASSWORD")
 
 
+def setup_logger():
+  logger = logging.getLogger()
+  logger.setLevel(logging.INFO)
+  formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+  console_handler = logging.StreamHandler()
+  console_handler.setLevel(logging.INFO)
+  console_handler.setFormatter(formatter)
+  logger.addHandler(console_handler)
+
+  file_handler = RotatingFileHandler('task.log', maxBytes=1024 * 1024 * 10, backupCount=3)
+  file_handler.setLevel(logging.INFO)
+  file_handler.setFormatter(formatter)
+  logger.addHandler(file_handler)
+  return logger
+
+
 def send_email(receiver_emails, email_body):
+  logger = setup_logger()
+  logger.info(f"Sending email to {receiver_emails}")
+
   # Create the MIMEMultipart email object
   msg = MIMEMultipart()
   msg['From'] = sender_email
@@ -28,13 +51,18 @@ def send_email(receiver_emails, email_body):
 
   # Sending the email via Gmail's SMTP server
   try:
-    with smtplib.SMTP('smtp.gmail.com', 587) as server:
-      server.starttls()  # Start TLS encryption
-      server.login(sender_email, sender_email_password)  # Login to your email
-      server.sendmail(sender_email, receiver_emails, msg.as_string())  # Send the email
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:  # SSL connection
+      server.set_debuglevel(1)  # Enable debug output
+      server.login(sender_email, sender_email_password)
+      server.sendmail(sender_email, receiver_emails, msg.as_string())
       print("Email sent successfully!")
+      logger.info(f"Email sent successfully to {receiver_emails}")
+  except smtplib.SMTPException as e:
+    print(f"SMTP error occurred: {e}")
+    logger.info(f"SMTP error occurred: {e}")
   except Exception as e:
-    print(f"Failed to send email: {e}")
+    print(f"General error occurred: {e}")
+    logger.info(f"General error occurred: {e}")
 
 
 '''

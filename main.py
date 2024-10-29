@@ -14,10 +14,12 @@ from models import User
 
 from sqlalchemy.orm import Session
 
-from utils import send_email, fill_html_as_pdf
+from utils import send_email, setup_logger, fill_html_as_pdf
 
 from uuid import uuid4
 
+
+logger = setup_logger()
 
 # Load environment variables from .env file
 load_dotenv()
@@ -76,6 +78,7 @@ async def form_submit(request: Request, db: Session = Depends(get_db)):
 
 		# Create an filled HTML file in the templates folder
 		fill_html_as_pdf(html_file_location, data['data'])
+		logger.info(f"The filled pdf will be at {backend_url}/download-pdf/{user.user_id}")
 
 		# After creation send the email to both user & admin
 		send_email(
@@ -90,6 +93,7 @@ async def form_submit(request: Request, db: Session = Depends(get_db)):
 		return {"user_id": user_id, "message": "HTML file is created and notification email sent"}
 	except Exception as e:
 		print("error occurred after form submission:", e)
+		logger.info(f"error occurred after form submission: {e}")
 		send_email(
 			[admin_email, email_address],
 			f'Something went wrong when "MILO Kem Juara 2024 Entry Form" submitted from {email_address}'
@@ -102,7 +106,9 @@ async def download_pdf(user_id: str, request: Request):
 	html_file_name = f"{user_id}.html"
 
 	if not os.path.exists(f"templates/{html_file_name}"):
+		logger.info(f"File not found at requested path: {backend_url}/download-pdf/{user_id}")
 		raise HTTPException(status_code=404, detail="File not found")
 
 	# Render the HTML template with Jinja2
+	logger.info(f"File found at requested path: {backend_url}/download-pdf/{user_id}")
 	return templates.TemplateResponse(html_file_name, {"request": request})
