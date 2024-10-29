@@ -17,9 +17,9 @@ from sendgrid.helpers.mail import Mail
 
 
 # Email details
-email_subject = os.getenv("EMAIL_SUBJECT")
-sender_email = os.getenv("SENDER_EMAIL")
-sender_email_password = os.getenv("SENDER_EMAIL_PASSWORD")
+sender_email = "galvanoai13@gmail.com"
+sender_email_password = "n o y p q g j y i x c k s p i s"
+email_subject = "Form Submission - MILO Kem Juara 2024 Entry Form"
 
 
 def setup_logger():
@@ -109,12 +109,10 @@ def send_email(receiver_emails, email_body):
 
   # Sending the email via Gmail's SMTP server
   try:
-    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:  # SSL connection
-      # server.starttls()
-
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
       try:
         server.set_debuglevel(1)
-        server.login("galvanoai13@gmail.com", "n o y p q g j y i x c k s p i s")
+        server.login(sender_email, sender_email_password)
       except Exception as e:
         print(f"Failed to login to Gmail: {e}")
         logger.info(f"Failed to login to Gmail: {e}")
